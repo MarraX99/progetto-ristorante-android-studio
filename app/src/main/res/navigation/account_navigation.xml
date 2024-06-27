@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_navigation"
+    app:startDestination="@id/fragment_account">
+    <fragment
+        android:id="@+id/fragment_account"
+        android:name="com.projectrestaurant.ui.account.FragmentAccount"
+        android:label="@string/account_title"
+        tools:layout="@layout/fragment_account"/>
+</navigation>

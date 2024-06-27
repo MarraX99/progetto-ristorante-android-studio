@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_drawer"
+    tools:showIn="navigation_view">
+    <group
+        android:checkableBehavior="single"
+        android:menuCategory="container">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/menu_settings"/>
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_info"
+            android:title="@string/menu_about_us"/>
+        <item
+            android:id="@+id/nav_privacy_policy"
+            android:icon="@drawable/ic_menu_privacy"
+            android:title="@string/menu_privacy_policy"/>
+        <item
+            android:id="@+id/nav_login_register"
+            android:icon="@drawable/ic_menu_login"
+            android:title="@string/menu_login"/>
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_menu_account_circle"
+            android:title="@string/account_title"/>
+    </group>
+
+</menu>

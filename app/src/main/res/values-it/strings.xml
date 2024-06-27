@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">Progetto Ristorante</string>
+    <string name="navigation_drawer_open">Apri menù a tendina</string>
+    <string name="navigation_drawer_close">Chiudi menù a tendina</string>
+
+    <string name="menu_settings">Impostazioni</string>
+    <string name="menu_about_us">Chi siamo</string>
+    <string name="menu_privacy_policy">Polizza sulla privacy</string>
+    <string name="menu_account">Profilo</string>
+    <string name="menu_login">Accedi/Registrati</string>
+    <string name="settings_app_info">Informazioni sull\'app</string>
+    <string name="settings_theme">Tema</string>
+    <string name="ok">OK</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+
+    <string name="about_us_title">Chi siamo</string>
+    <string name="about_us_content">Prototipo creato per l\'esame di Programmazione Mobile</string>
+    <string name="privacy_policy_title">Polizza sulla privacy</string>
+    <string name="privacy_policy_content">Scrivi qui la tua polizza sulla privacy</string>
+    <string name="login_title">Accedi</string>
+    <string name="logout_title">Esci</string>
+    <string name="register_title">Registrati</string>
+    <string name="account_title">Profilo</string>
+    <string name="forgot_password">Password dimenticata?</string>
+    <string name="user_name_hint">Nome</string>
+    <string name="user_surname_hint">Cognome</string>
+    <string name="user_email_hint">E-mail</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_password_confirm_hint">Conferma password</string>
+
+    <string name="user_password_invalid_short">Password troppo corta</string>
+    <string name="user_password_invalid_digit">Numero di cifre insufficiente</string>
+    <string name="user_password_invalid_lower_case">Numero di minuscole insufficiente</string>
+    <string name="user_password_invalid_upper_case">Numero di maiuscole insufficiente</string>
+    <string name="user_password_error">Password errata</string>
+    <string name="user_login_success">Accesso effettuato</string>
+    <string name="user_login_error_title">Impossibile accedere</string>
+    <string name="user_login_error_message">Controlla se e-mail e password sono corrette e riprova</string>
+    <string name="reset_password_title">Reimposta password</string>
+    <string name="reset_password_email_sent_title">Email di reset password inviata</string>
+    <string name="reset_password_email_sent_message">Controlla la posta in arrivo</string>
+    <string name="reset_password_email_error_title">Impossibile mandare e-mail di reset password</string>
+    <string name="reset_password_email_error_message">Riprova più tardi</string>
+    <string name="reset_password_info">Inserisci la tua e-mail e poi clicca per reimpostare la password</string>
+
+    <string name="register_password_info">La password deve essere lunga almeno 8 caratteri. Deve contenere inoltre: 2 lettere maiuscole, 2 lettere minuscole, 2 cifre ed un carattere speciale</string>
+    <string name="privacy_policy_confirm">Accetto la vostra polizza sulla privacy</string>
+    <string name="user_register_success">Registrazione effettuata</string>
+    <string name="user_register_error_title">Impossibile registrarsi</string>
+    <string name="user_error_blank_fields">Tutti i campi sono vuoti</string>
+    <string name="user_error_blank_name">Il campo nome è vuoto</string>
+    <string name="user_error_blank_surname">Il campo cognome è vuoto</string>
+    <string name="user_error_blank_email">Il campo e-mail è vuoto</string>
+    <string name="user_error_blank_password">Il campo password è vuoto</string>
+    <string name="user_error_password_short">Password troppo corta</string>
+    <string name="user_error_password_upper_case">Numero di maiuscole insufficiente</string>
+    <string name="user_error_password_lower_case">Numero di minuscole insufficiente</string>
+    <string name="user_error_password_digit">Numero di cifre insufficiente</string>
+    <string name="user_error_password_special_char">Numero di caratteri speciali insufficiente</string>
+    <string name="user_error_password_mismatch">Le password non coincidono</string>
+    <string name="user_error_email_invalid">E-mail non valida</string>
+    <string name="user_error_password_invalid">Le password non sono valide o non coincidono</string>
+    <string name="user_privacy_policy_check_missing">Devi accettare la nostra polizza sulla privacy</string>
+    <string name="user_register_error_message">Riprova più tardi</string>
+    <string name="user_mandatory_field">Campo obbligatorio</string>
+    <string name="app_version_title">Versione</string>
+    <string name="copyright_info">Scrivi qui il tuo copyright</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="theme_system">Default di sistema</string>
+
+    <string name="title_images_main">Immagini di ristoranti</string>
+    <string name="main_new_order">Nuovo ordine</string>
+
+    <string name="food_quantity_title">Quantità</string>
+    <string name="food_ingredients_edit_title">Modifica ingredienti</string>
+    <string name="increment_title">Incrementa</string>
+    <string name="decrement_title">Decrementa</string>
+    <string name="additional_title">Extra</string>
+    <string name="removal_title">Rimuovi</string>
+    <string name="shopping_cart_add_title">Aggiungi %1$s al carrello</string>
+    <string name="ingredient_extra_prefix">Extra</string>
+    <string name="shopping_cart_remove_item_title">Rimuovi dal carrello</string>
+    <string name="shopping_cart_remove_item_message">Vuoi rimuovere questo prodotto dal carrello?</string>
+    <string name="shopping_cart_error_title">Qualcosa è andato storto</string>
+    <string name="shopping_cart_add_product_error_message">Si è verificato un errore nell\'aggiungere il prodotto al carrello, per favore riprova</string>
+    <string name="shopping_cart_add_product_error_message_no_auth">Si è verificato un errore nell\'aggiungere il prodotto al carrello, per favore accedi e riprova</string>
+    <string name="shopping_cart_edit_product_error_message">Si è verificato un errore nell\'aggiornare il prodotto nel carrello, per favore riprova</string>
+    <string name="shopping_cart_title">Il tuo carrello</string>
+    <string name="shopping_cart_product_quantity">Quantità: %1$s</string>
+    <string name="shopping_cart_order_title">Ordina ora</string>
+    <string name="shopping_cart_edit_product_title">Aggiorna carrello</string>
+    <string name="shopping_cart_go_to">Vai al carrello</string>
+
+    <string name="order_add_note_message">Scrivi una nota per il tuo ordine</string>
+    <string name="order_add_note_title">Aggiungi nota</string>
+    <string name="order_note_error_message">Si è verificato un errore nell\'aggiungere la nota al tuo ordine, per favore riprova</string>
+    <string name="order_success_message">Ordine effettuato con successo</string>
+    <string name="order_error_message">Si è verificato un errore nella creazione dell\'ordine, per favore riprova</string>
+    <string name="order_connection_error_title">Errore di connessione</string>
+    <string name="order_connection_error_message">Controlla la tua connessione ad internet e riprova</string>
+    <string name="order_login_error_title">Non hai effettuato l\'accesso</string>
+    <string name="order_login_error_message">Si è verificato un errore nella creazione dell\'ordine, per favore accedi e riprova</string>
+</resources>

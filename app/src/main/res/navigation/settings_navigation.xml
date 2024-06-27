@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_navigation"
+    app:startDestination="@id/fragment_settings">
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.projectrestaurant.ui.settings.FragmentSettings"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_fragment_settings_to_fragment_app_info"
+            app:destination="@id/fragment_app_info"
+            app:popUpTo="@id/fragment_settings"/>
+        <action
+            android:id="@+id/action_fragment_settings_to_fragment_theme"
+            app:destination="@id/fragment_theme"
+            app:popUpTo="@id/fragment_settings"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_app_info"
+        android:name="com.projectrestaurant.ui.settings.FragmentAppInfo"
+        android:label="@string/settings_app_info"
+        tools:layout="@layout/fragment_settings_app_info"/>
+    <fragment
+        android:id="@+id/fragment_theme"
+        android:name="com.projectrestaurant.ui.settings.FragmentTheme"
+        android:label="@string/settings_theme"
+        tools:layout="@layout/fragment_settings_theme"/>
+</navigation>

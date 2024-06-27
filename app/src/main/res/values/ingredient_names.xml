@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ingredient_names">
+        <item>Artichokes</item>
+        <item>Fiordilatte mozzarella</item>
+        <item>Champignon mushrooms</item>
+        <item>Olives</item>
+        <item>Raw ham</item>
+        <item>Tomato sauce</item>
+        <item>Egg</item>
+        <item>Eggplant</item>
+        <item>French fries</item>
+        <item>Radish</item>
+        <item>Zucchini</item>
+        <item>Parsley</item>
+        <item>Sausage</item>
+        <item>Würstel</item>
+        <item>Anchovy</item>
+        <item>Courgette flowers</item>
+        <item>Spianata calabra</item>
+        <item>Potatoes</item>
+        <item>Gorgonzola</item>
+        <item>Grana Padano</item>
+        <item>Provola</item>
+        <item>Baked ham</item>
+        <item>Pork cheek</item>
+        <item>Pecorino</item>
+        <item>Bufala</item>
+        <item>Culatta</item>
+        <item>Pachino</item>
+        <item>Basil</item>
+        <item>Bresaola</item>
+        <item>Porcini mushrooms</item>
+    </string-array>
+</resources>

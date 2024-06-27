@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">Project Restaurant</string>
+    <string name="version_number" translatable="false">0.1</string>
+    <string name="preference_file_key" translatable="false">preferences</string>
+    <string name="saved_theme_key" translatable="false">theme</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about_us">About us</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
+    <string name="menu_account">My account</string>
+    <string name="menu_login">Login/Register</string>
+    <string name="settings_app_info">About this app</string>
+    <string name="settings_theme">Theme</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="about_us_title">About us</string>
+    <string name="about_us_content">App prototype created for the mobile programming course exam</string>
+    <string name="privacy_policy_title">Privacy policy</string>
+    <string name="privacy_policy_content">Here you can write your privacy policy</string>
+    <string name="login_title">Login</string>
+    <string name="logout_title">Logout</string>
+    <string name="register_title">Register</string>
+    <string name="account_title">Your account</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="user_name_hint">Name</string>
+    <string name="user_surname_hint">Surname</string>
+    <string name="user_email_hint">E-mail</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_password_confirm_hint">Confirm password</string>
+
+    <string name="user_password_invalid_short">Password length is too short</string>
+    <string name="user_password_invalid_digit">Not enough digits</string>
+    <string name="user_password_invalid_lower_case">Not enough lower case characters</string>
+    <string name="user_password_invalid_upper_case">Not enough upper case characters</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_login_success">Successfully logged in</string>
+    <string name="user_login_error_title">Unable to log in</string>
+    <string name="user_login_error_message">Check if your e-mail and password are correct and try again</string>
+    <string name="reset_password_title">Reset password</string>
+    <string name="reset_password_email_sent_title">Password reset email sent</string>
+    <string name="reset_password_email_sent_message">Please check your email inbox</string>
+    <string name="reset_password_email_error_title">Failed to send password reset email</string>
+    <string name="reset_password_email_error_message">Please try again later</string>
+    <string name="reset_password_info">Please insert your email address and then click to reset your password</string>
+
+    <string name="register_password_info">The password has to be at least 8 characters long. It also has to contain: 2 uppercase letters, 2 lowercase letters, 2 digits and 1 special character</string>
+    <string name="privacy_policy_confirm">I agree to privacy policy</string>
+    <string name="user_register_success">Successfully registered</string>
+    <string name="user_register_error_title">Unable to register</string>
+    <string name="user_error_blank_fields">All fields are blank</string>
+    <string name="user_error_blank_name">The name field is blank</string>
+    <string name="user_error_blank_surname">The surname field is blank</string>
+    <string name="user_error_blank_email">The e-mail field is blank</string>
+    <string name="user_error_blank_password">The password field is blank</string>
+    <string name="user_error_password_short">Password too short</string>
+    <string name="user_error_password_upper_case">Not enough upper case characters</string>
+    <string name="user_error_password_lower_case">Not enough lower case characters</string>
+    <string name="user_error_password_digit">Not enough digits</string>
+    <string name="user_error_password_special_char">Not enough special chars</string>
+    <string name="user_error_password_mismatch">Passwords don\'t match</string>
+    <string name="user_error_email_invalid">Invalid e-mail</string>
+    <string name="user_error_password_invalid">Passwords aren\'t valid or don\'t match</string>
+    <string name="user_privacy_policy_check_missing">You must accept our privacy policy</string>
+    <string name="user_register_error_message">Please try again later</string>
+    <string name="user_mandatory_field">Mandatory field</string>
+    <string name="app_version_title">Version</string>
+    <string name="copyright_info">Here you can write your copyright</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System default</string>
+
+    <string name="title_images_main">Restaurant images</string>
+    <string name="main_new_order">New order</string>
+
+    <string name="food_quantity_title">Quantity</string>
+    <string name="food_ingredients_edit_title">Edit ingredients</string>
+    <string name="increment_title">Increment</string>
+    <string name="decrement_title">Decrement</string>
+    <string name="additional_title">Additional</string>
+    <string name="removal_title">Remove</string>
+    <string name="shopping_cart_add_title">Add %1$s to shopping cart</string>
+    <string name="ingredient_extra_prefix">Additional</string>
+    <string name="shopping_cart_remove_item_title">Delete from cart</string>
+    <string name="shopping_cart_remove_item_message">Do you want to remove this product from the cart?</string>
+    <string name="shopping_cart_error_title">Something went wrong</string>
+    <string name="shopping_cart_add_product_error_message">Error while adding this product to your shopping cart, please try again</string>
+    <string name="shopping_cart_add_product_error_message_no_auth">Error while adding this product to your shopping cart, please login and try again</string>
+    <string name="shopping_cart_edit_product_error_message">Error while updating cart product\'s data, please try again</string>
+    <string name="shopping_cart_title">Your shopping cart</string>
+    <string name="shopping_cart_product_quantity">Quantity: %1$s</string>
+    <string name="shopping_cart_product_price" translatable="false">€ %1$s</string>
+    <string name="shopping_cart_product_price_plus" translatable="false">+ € %1$s</string>
+    <string name="shopping_cart_order_title">Order now</string>
+    <string name="shopping_cart_edit_product_title">Update cart</string>
+    <string name="shopping_cart_go_to">Go to cart</string>
+
+    <string name="order_add_note_message">Write a note for your order</string>
+    <string name="order_add_note_title">Add note</string>
+    <string name="order_note_error_message">Error while adding a note in your order, please try again</string>
+    <string name="order_success_message">Order created successfully</string>
+    <string name="order_error_message">Error while creating a new order, please try again</string>
+    <string name="order_connection_error_title">Connection error</string>
+    <string name="order_connection_error_message">Check your internet connection and try again</string>
+    <string name="order_login_error_title">You are not logged in</string>
+    <string name="order_login_error_message">Error while submitting new order, please log in and try again</string>
+</resources>

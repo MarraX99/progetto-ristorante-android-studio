@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_types">
+        <item>Pizze classiche</item>
+        <item>Pizze speciali</item>
+        <item>Fritture</item>
+        <item>Dolci</item>
+        <item>Bevande</item>
+    </string-array>
+</resources>

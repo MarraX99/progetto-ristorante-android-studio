@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CardView.Common" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardPreventCornerOverlap">true</item>
+    </style>
+
+    <style name="CardView.RecyclerViewAdapter" parent="CardView.Common">
+        <item name="cardElevation">3dp</item>
+        <item name="contentPadding">3dp</item>
+    </style>
+
+    <style name="CardView.Main" parent="CardView.Common">
+        <item name="cardElevation">6dp</item>
+        <item name="contentPadding">6dp</item>
+    </style>
+
+    <style name="CardView.Secondary" parent="CardView.Common">
+        <item name="cardElevation">3dp</item>
+        <item name="contentPadding">3dp</item>
+    </style>
+
+    <style name="CardView.Button" parent="CardView.Common">
+        <item name="cardBackgroundColor">?attr/colorPrimary</item>
+        <item name="cardCornerRadius">3dp</item>
+        <item name="elevation">3dp</item>
+        <item name="contentPadding">3dp</item>
+    </style>
+
+    <style name="TextViewCommon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:drawableTint">?attr/colorOnBackground</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+
+    <style name="TextViewTitle" parent="TextViewCommon">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:autoSizeTextType">uniform</item>
+    </style>
+
+    <style name="TextViewTitleColorVariant" parent="TextViewCommon">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
+    </style>
+
+    <style name="TextViewDescription" parent="TextViewCommon">
+        <item name="android:autoSizeTextType">uniform</item>
+    </style>
+
+    <style name="TextViewLink" parent="TextViewCommon">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
+        <item name="android:textColorLink">?attr/colorSecondaryVariant</item>
+        <item name="android:textColorLinkInverse">?attr/colorSecondary</item>
+        <item name="drawableTint">?attr/colorSecondaryVariant</item>
+    </style>
+
+    <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:checkMarkTint">?attr/colorSecondaryVariant</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:checkMarkTint">?attr/colorSecondaryVariant</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">120dp</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="elevation">3dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">120dp</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="elevation">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="backgroundTint">@color/image_button_background</item>
+        <item name="elevation">3dp</item>
+    </style>
+
+    <style name="MaterialTextInputEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColorHint">@color/gray_700</item>
+        <item name="android:textColorHighlight">?attr/colorSecondaryVariant</item>
+        <item name="cursorColor">?attr/colorSecondaryVariant</item>
+
+    </style>
+    <style name="MaterialTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="counterEnabled">true</item>
+        <item name="errorEnabled">true</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="passwordToggleTint">@color/gray_700</item>
+        <item name="startIconTint">@color/gray_700</item>
+        <item name="errorIconTint">?attr/colorError</item>
+        <item name="android:foregroundTint">?attr/colorSecondaryVariant</item>
+        <item name="counterOverflowTextColor">?attr/colorError</item>
+        <item name="hintTextColor">?attr/colorSecondaryVariant</item>
+        <item name="counterTextColor">?attr/colorOnBackground</item>
+        <item name="cursorColor">?attr/colorSecondaryVariant</item>
+        <item name="cursorErrorColor">?attr/colorError</item>
+        <item name="errorTextColor">?attr/colorError</item>
+        <item name="boxStrokeErrorColor">?attr/colorError</item>
+        <item name="helperTextTextColor">?attr/colorOnBackground</item>
+        <item name="prefixTextColor">?attr/colorOnBackground</item>
+        <item name="suffixTextColor">?attr/colorOnBackground</item>
+        <item name="placeholderTextColor">?attr/colorSecondaryVariant</item>
+        <item name="boxStrokeColor">?attr/colorSecondaryVariant</item>
+    </style>
+
+    <style name="RecyclerView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">?attr/colorSurface</item>
+    </style>
+</resources>

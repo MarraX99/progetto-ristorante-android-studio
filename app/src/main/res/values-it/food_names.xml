@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_names">
+        <item>Capricciosa</item>
+        <item>Ortolana</item>
+        <item>Funghi</item>
+        <item>Würstel</item>
+        <item>Fiori e alici</item>
+        <item>Napoli</item>
+        <item>Marinara</item>
+        <item>Diavola</item>
+        <item>Salsiccia</item>
+        <item>Paperina</item>
+        <item>Quattro formaggi</item>
+        <item>Focaccia</item>
+        <item>Patate e salsiccia</item>
+        <item>Rossa semplice</item>
+        <item>Amatriciana</item>
+        <item>Gran Culatta</item>
+        <item>Crudo di Norcia</item>
+        <item>Made in Sud</item>
+        <item>Bresaola</item>
+        <item>Porcini e tartufo</item>
+        <item>Coca-Cola 150cl</item>
+        <item>Coca-Cola zero 150cl</item>
+        <item>Coca-Cola 33cl</item>
+        <item>Coca-Cola zero 33cl</item>
+        <item>Fanta 33cl</item>
+        <item>Sprite 33cl</item>
+        <item>Peroni 66cl</item>
+        <item>Olive ascolane</item>
+        <item>Patatine fritte</item>
+        <item>Mozzarelline</item>
+        <item>Anelli di cipolla</item>
+        <item>Crocchette di patate</item>
+        <item>Fiori di zucca</item>
+        <item>Focaccia con nutella</item>
+        <item>Schiacciata con nutella</item>
+    </string-array>
+</resources>

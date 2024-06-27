@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_register_navigation"
+    app:startDestination="@id/fragment_login">
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="com.projectrestaurant.ui.loginregister.FragmentLogin"
+        android:label="@string/login_title"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_register"
+            app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_new_password"
+            app:destination="@id/fragment_new_password"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_register"
+        android:name="com.projectrestaurant.ui.loginregister.FragmentRegister"
+        android:label="@string/register_title"
+        tools:layout="@layout/fragment_register"/>
+    <fragment
+        android:id="@+id/fragment_new_password"
+        android:name="com.projectrestaurant.ui.loginregister.FragmentNewPassword"
+        android:label="@string/reset_password_title"
+        tools:layout="@layout/fragment_new_password"/>
+</navigation>

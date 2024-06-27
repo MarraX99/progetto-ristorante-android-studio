@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_descriptions">
+        <item>Our margherita with fresh champignon mushrooms, olives, egg yolk, raw ham from Norcia and artichokes</item>
+        <item>Base created using fiordilatte mozzarella with the addition of eggplants, zucchinis, potatoes and radish</item>
+        <item>Our margherita with fresh champignon mushrooms and parsley</item>
+        <item>Our margherita with würstels</item>
+        <item>Base created using fiordilatte mozzarella with the addition of pumpkin flowers and anchovies</item>
+        <item>Our margherita with anchovies</item>
+        <item>Tomato sauce, garlic oil, oregano and anchovy sauce</item>
+        <item>Our margherita with artisanal spianata calabra</item>
+        <item>Our margherita with sausages from Norcia</item>
+        <item>Our margherita with french fries and würstels</item>
+        <item>Base created using fiordilatte mozzarella, gorgonzola, provola and grana padano</item>
+        <item>A simple focaccia with salt, oil and rosemary</item>
+        <item>Base created with fiordilatte mozzarella with potatoes and sausages from Norcia</item>
+        <item>Tomato sauce with a bit of oil</item>
+        <item>Tomato sauce with pork cheek from Amatrice and pecorino</item>
+        <item>Tomato sauce with bufala and gran culatta from Bologna</item>
+        <item>Fresh pachinoes, bufala, rughetta, grana padano and raw ham from Norcia</item>
+        <item>Our margherita with onions, nduja, olives and basil</item>
+        <item>Base created using fiordilatte mozzarella with bresaola, rughetta and grana padano</item>
+        <item>Base created using fiordilatte mozzarella with truffles and sausages from Norcia</item>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item>6 pieces</item>
+        <item>Stick format</item>
+        <item>6 pieces</item>
+        <item>6 pieces</item>
+        <item>4 pieces</item>
+        <item>4 pieces</item>
+        <item>Our focaccia with nutella and powdered sugar</item>
+        <item>Our schiacciata filled with nutella and with powdered sugar</item>
+    </string-array>
+</resources>

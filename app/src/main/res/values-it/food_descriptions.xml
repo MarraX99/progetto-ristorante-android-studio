@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_descriptions">
+        <item>La nostra margherita con funghi champignon freschi, olive, tuorlo d\'uovo, prosciutto crudo di Norcia e carciofi</item>
+        <item>Base di fiordilatte con melanzane, zucchine, patate e radicchio</item>
+        <item>La nostra margherita con funghi champignon freschi e prezzemolo</item>
+        <item>La nostra margherita con würstel</item>
+        <item>Base di fiordilatte con fiori di zucca e alici</item>
+        <item>La nostra margherita con alici</item>
+        <item>Salsa di pomodoro, olio all\'aglio, origano e salsa di alici</item>
+        <item>La nostra margherita con spianata calabra artigianale</item>
+        <item>La nostra margherita con salsicce di Norcia</item>
+        <item>La nostra margherita con patatine fritte e würstel</item>
+        <item>Base di fiordilatte, gorgonzola, provola e grana padano</item>
+        <item>Semplice focaccia con sale, olio and rosmarino</item>
+        <item>Base di fiordilatte con patate e salsicce di Norcia</item>
+        <item>Salsa di pomodoro con un filo d\'olio</item>
+        <item>Salsa di pomodoro con guanciale di Amatrice e pecorino</item>
+        <item>Salsa di pomodoro con bufala e gran culatta di Bologna</item>
+        <item>Pachino freschi, bufala, rughetta, grana padano e prosciutto crudo di Norcia</item>
+        <item>La nostra margherita con cipolle, nduja, olive e basilico</item>
+        <item>Base di fiordilatte con bresaola, rughetta e grana padano</item>
+        <item>Base di fiordilatte con tartufi e salsicce di Norcia</item>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item/>
+        <item>6 pezzi</item>
+        <item>Formato bastoncino</item>
+        <item>6 pezzi</item>
+        <item>6 pezzi</item>
+        <item>4 pezzi</item>
+        <item>4 pezzi</item>
+        <item>La nostra focaccia con nutella e zucchero a velo</item>
+        <item>La nostra schiacciato riempita con nutella e con zucchero a velo</item>
+    </string-array>
+</resources>

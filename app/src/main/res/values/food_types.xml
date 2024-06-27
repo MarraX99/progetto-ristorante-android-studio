@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="food_types">
+        <item>Classic pizzas</item>
+        <item>Special pizzas</item>
+        <item>Fried</item>
+        <item>Sweets</item>
+        <item>Drinks</item>
+    </string-array>
+</resources>

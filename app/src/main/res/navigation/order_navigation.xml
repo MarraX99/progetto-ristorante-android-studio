@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/order_navigation"
+    app:startDestination="@id/fragment_food_type">
+    <fragment
+        android:id="@+id/fragment_food_type"
+        android:name="com.projectrestaurant.ui.order.FragmentFoodType"
+        android:label="@string/main_new_order"
+        tools:layout="@layout/fragment_food_type">
+        <action
+            android:id="@+id/action_fragment_food_type_to_fragmentFoodList"
+            app:destination="@id/fragment_food_list"/>
+        <action
+            android:id="@+id/action_fragment_food_type_to_fragment_shopping_cart"
+            app:destination="@id/fragment_shopping_cart" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_food_list"
+        android:name="com.projectrestaurant.ui.order.FragmentFoodList"
+        android:label="@string/main_new_order"
+        tools:layout="@layout/fragment_food_list">
+        <argument
+            android:name="foodType"
+            app:argType="integer"
+            android:defaultValue="0"/>
+        <action
+            android:id="@+id/action_fragment_food_list_to_fragmentFoodIngredients"
+            app:destination="@id/fragment_food_ingredients" />
+        <action
+            android:id="@+id/action_fragment_food_list_to_fragment_shopping_cart"
+            app:destination="@id/fragment_shopping_cart" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_food_ingredients"
+        android:name="com.projectrestaurant.ui.order.FragmentFoodIngredients"
+        android:label="@string/main_new_order"
+        tools:layout="@layout/fragment_food_ingredients">
+        <argument android:name="food"
+            app:argType="com.projectrestaurant.database.Food"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_shopping_cart"
+        android:name="com.projectrestaurant.ui.order.FragmentShoppingCart"
+        android:label="@string/shopping_cart_title"
+        tools:layout="@layout/fragment_shopping_cart">
+        <argument android:name="cartProducts" />
+        <action
+            android:id="@+id/action_fragment_shopping_cart_to_fragment_note"
+            app:destination="@id/fragment_note" />
+        <action
+            android:id="@+id/action_fragment_shopping_cart_to_fragment_edit_cart_product"
+            app:destination="@id/fragment_edit_cart_product" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_note"
+        android:name="com.projectrestaurant.ui.order.FragmentNote"
+        android:label="@string/order_add_note_title"
+        tools:layout="@layout/fragment_shopping_cart_note"/>
+    <fragment
+        android:id="@+id/fragment_edit_cart_product"
+        android:name="com.projectrestaurant.ui.order.FragmentEditCartProduct"
+        android:label="@string/shopping_cart_edit_product_title"
+        tools:layout="@layout/fragment_shopping_cart_edit_product">
+        <argument
+            android:name="bundle"
+            app:argType="android.os.Bundle" />
+    </fragment>
+</navigation>

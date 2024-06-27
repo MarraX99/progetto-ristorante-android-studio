@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ingredient_names">
+        <item>Carciofi</item>
+        <item>Fiordilatte</item>
+        <item>Funghi champignon</item>
+        <item>Olive</item>
+        <item>Prosciutto crudo</item>
+        <item>Salsa di pomodoro</item>
+        <item>Uovo</item>
+        <item>Melanzana</item>
+        <item>Patatine fritte</item>
+        <item>Radicchio</item>
+        <item>Zucchine</item>
+        <item>Prezzemolo</item>
+        <item>Salsiccia</item>
+        <item>Würstel</item>
+        <item>Alici</item>
+        <item>Fiori di zucca</item>
+        <item>Spianata calabra</item>
+        <item>Patate</item>
+        <item>Gorgonzola</item>
+        <item>Grana Padano</item>
+        <item>Provola</item>
+        <item>Prosciutto cotto</item>
+        <item>Guanciale</item>
+        <item>Pecorino</item>
+        <item>Bufala</item>
+        <item>Culatta</item>
+        <item>Pachino</item>
+        <item>Basilico</item>
+        <item>Bresaola</item>
+        <item>Funghi porcini</item>
+    </string-array>
+</resources>
