@@ -26,7 +26,8 @@ abstract class RestaurantDB: RoomDatabase() {
                     instance = Room.databaseBuilder(context.applicationContext, RestaurantDB::class.java,
                         "restaurant_database").fallbackToDestructiveMigration().build()
                     _instance = instance }
-                return instance }
+                return instance
+            }
         }
     }
 }

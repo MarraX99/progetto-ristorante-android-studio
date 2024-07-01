@@ -10,15 +10,26 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import java.util.Date
+
+private class DateConverter {
+    // Timestamp = number of milliseconds passed since January 1, 1970, 00:00:00 UTC
+    @TypeConverter fun dateFromTimestamp(timestamp: Long): Date = Date(timestamp)
+
+    @TypeConverter fun timestampFromDate(date: Date): Long = date.time
+}
 
 @Entity(tableName = "Orders", foreignKeys = [
-    ForeignKey(User::class, arrayOf("user_id"), arrayOf("user_id"), ForeignKey.SET_NULL)],
+    ForeignKey(User::class, ["user_id"], ["user_id"], ForeignKey.SET_NULL)],
     indices = [Index(value = ["user_id"])])
+@TypeConverters(DateConverter::class)
 data class Order(
     @ColumnInfo(name = "order_id") @PrimaryKey val orderId: String,
     @ColumnInfo(name = "user_id") var userId: String?,
-    val date: String,
-    val time: String,
+    @ColumnInfo(name = "order_date") val orderDate: Date,
+    @ColumnInfo(name = "delivery_date") val deliveryDate: Date,
     @ColumnInfo(name = "total_price") val totalPrice: Double
 )
 

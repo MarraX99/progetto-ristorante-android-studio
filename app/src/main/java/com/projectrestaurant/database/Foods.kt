@@ -19,7 +19,7 @@ data class Food (
     @Ignore var name: String = "",
     @Ignore var description: String = "",
     val type: Int,
-    @ColumnInfo(name = "unit_price") var unitPrice: String,
+    @ColumnInfo(name = "unit_price") var unitPrice: Double,
     @ColumnInfo(name = "image_uri") var imageUri: String = ""
 ) : Parcelable
 {
@@ -29,11 +29,11 @@ data class Food (
         parcel.readString()!!,  //name
         parcel.readString()!!,  //description
         parcel.readInt(),   //type
-        parcel.readString()!!,  //unitPrice
+        parcel.readDouble(),  //unitPrice
         parcel.readString()!!   //imageUri
-    ) { }
+    )
 
-    constructor(foodId: Int, type: Int, unitPrice: String, imageUri: String)
+    constructor(foodId: Int, type: Int, unitPrice: Double, imageUri: String)
     : this(foodId, "", "", type, unitPrice, imageUri)
 
     override fun describeContents(): Int { return 0 }
@@ -43,7 +43,7 @@ data class Food (
         parcel.writeString(this.name)
         parcel.writeString(this.description)
         parcel.writeInt(this.type)
-        parcel.writeString(this.unitPrice)
+        parcel.writeDouble(this.unitPrice)
         parcel.writeString(this.imageUri)
     }
 

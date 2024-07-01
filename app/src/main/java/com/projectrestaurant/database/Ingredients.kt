@@ -16,23 +16,23 @@ import androidx.room.Query
 data class Ingredient(
     @ColumnInfo(name = "ingredient_id") @PrimaryKey val ingredientId: Int,
     @Ignore var name: String = "",
-    @ColumnInfo(name = "unit_price") var unitPrice: String,
+    @ColumnInfo(name = "unit_price") var unitPrice: Double,
     @ColumnInfo(name = "image_uri") var imageUri: String
 ): Parcelable
 {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readDouble(),
         parcel.readString()!!
     ) {}
 
-    constructor(ingredientId: Int, unitPrice: String, imageUri: String): this(ingredientId, "", unitPrice, imageUri)
+    constructor(ingredientId: Int, unitPrice: Double, imageUri: String): this(ingredientId, "", unitPrice, imageUri)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(this.ingredientId)
         parcel.writeString(this.name)
-        parcel.writeString(this.unitPrice)
+        parcel.writeDouble(this.unitPrice)
         parcel.writeString(this.imageUri)
     }
 
