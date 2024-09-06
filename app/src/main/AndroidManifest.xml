@@ -13,9 +13,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectRestaurant"
         tools:targetApi="31">
-		<activity
-            android:name=".MainActivity"
-            android:exported="true">
+        <activity
+            android:name=".ui.settings.ActivitySettings"
+            android:exported="true"
+            android:label="@string/menu_settings"
+            android:parentActivityName=".ui.order.ActivityOrder">
+        </activity>
+        <activity
+            android:name=".ui.aboutus.ActivityAboutUs"
+            android:exported="true"
+            android:label="@string/menu_about_us"
+            android:parentActivityName=".ui.order.ActivityOrder">
+        </activity>
+        <activity
+            android:name=".ui.privacypolicy.ActivityPrivacyPolicy"
+            android:exported="true"
+            android:label="@string/menu_privacy_policy"
+            android:parentActivityName=".ui.order.ActivityOrder">
+        </activity>
+        <activity
+            android:name=".ui.loginregister.ActivityLoginRegister"
+            android:windowSoftInputMode="stateVisible|adjustNothing"
+            android:exported="true"
+            android:label="@string/login_title"
+            android:parentActivityName=".ui.order.ActivityOrder">
+        </activity>
+        <activity
+            android:name=".ui.order.ActivityOrder"
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="true"
+            android:label="@string/main_new_order">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,48 +50,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.settings.ActivitySettings"
-            android:exported="true"
-            android:label="@string/menu_settings"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity
-            android:name=".ui.aboutus.ActivityAboutUs"
-            android:exported="true"
-            android:label="@string/menu_about_us"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity
-            android:name=".ui.privacypolicy.ActivityPrivacyPolicy"
-            android:exported="true"
-            android:label="@string/menu_privacy_policy"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity
-            android:name=".ui.loginregister.ActivityLoginRegister"
-            android:windowSoftInputMode="stateVisible|adjustNothing"
-            android:exported="true"
-            android:label="@string/login_title"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity
-            android:name=".ui.order.ActivityOrder"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="true"
-            android:label="@string/main_new_order"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity
             android:name=".ui.account.ActivityAccount"
             android:exported="true"
             android:label="@string/account_title"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.order.ActivityOrder">
         </activity>
         <activity
             android:name=".ui.userorders.ActivityUserOrders"
             android:exported="true"
             android:label="@string/my_orders_title"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.order.ActivityOrder">
         </activity>
 	</application>
 </manifest>

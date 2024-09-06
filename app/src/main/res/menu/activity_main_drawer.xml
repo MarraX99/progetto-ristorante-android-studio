@@ -9,7 +9,7 @@
         android:menuCategory="container">
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_settings"
+            android:icon="@drawable/ic_settings"
             android:title="@string/menu_settings"/>
         <item
             android:id="@+id/nav_about_us"
@@ -17,15 +17,15 @@
             android:title="@string/menu_about_us"/>
         <item
             android:id="@+id/nav_privacy_policy"
-            android:icon="@drawable/ic_menu_privacy"
+            android:icon="@drawable/ic_privacy"
             android:title="@string/menu_privacy_policy"/>
         <item
             android:id="@+id/nav_login_register"
-            android:icon="@drawable/ic_menu_login"
+            android:icon="@drawable/ic_login"
             android:title="@string/menu_login"/>
         <item
             android:id="@+id/nav_account"
-            android:icon="@drawable/ic_menu_account_circle"
+            android:icon="@drawable/ic_account_circle"
             android:title="@string/account_title"/>
     </group>
 

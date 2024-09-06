@@ -5,6 +5,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/order_navigation"
     app:startDestination="@id/fragment_food_type">
+    <activity
+        android:id="@+id/nav_about_us"
+        android:name="com.projectrestaurant.ui.aboutus.ActivityAboutUs"
+        android:label="activity_about_us"
+        tools:layout="@layout/activity_about_us"/>
+    <activity
+        android:id="@+id/nav_privacy_policy"
+        android:name="com.projectrestaurant.ui.privacypolicy.ActivityPrivacyPolicy"
+        android:label="activity_privacy_policy"
+        tools:layout="@layout/activity_privacy_policy"/>
+    <activity
+        android:id="@+id/nav_settings"
+        android:name="com.projectrestaurant.ui.settings.ActivitySettings"
+        android:label="activity_settings"
+        tools:layout="@layout/activity_settings"/>
+    <activity
+        android:id="@+id/nav_login_register"
+        android:name="com.projectrestaurant.ui.loginregister.ActivityLoginRegister"
+        android:label="activity_login_register"
+        tools:layout="@layout/activity_login_register"/>
+    <activity
+        android:id="@+id/nav_account"
+        android:name="com.projectrestaurant.ui.account.ActivityAccount"
+        android:label="activity_account"
+        tools:layout="@layout/activity_account"/>
     <fragment
         android:id="@+id/fragment_food_type"
         android:name="com.projectrestaurant.ui.order.FragmentFoodType"
