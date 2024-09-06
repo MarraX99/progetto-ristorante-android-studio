@@ -12,11 +12,17 @@
     <string name="menu_privacy_policy">Privacy policy</string>
     <string name="menu_account">My account</string>
     <string name="menu_login">Login/Register</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_edit">Edit fields</string>
     <string name="settings_app_info">About this app</string>
     <string name="settings_theme">Theme</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="pages_list" translatable="false">%1$s / %2$s</string>
+    <string name="navigation_next">Next</string>
+    <string name="navigation_before">Previous</string>
+    <string name="error_field_empty">Empty field</string>
 
     <string name="about_us_title">About us</string>
     <string name="about_us_content">App prototype created for the mobile programming course exam</string>
@@ -26,12 +32,14 @@
     <string name="logout_title">Logout</string>
     <string name="register_title">Register</string>
     <string name="account_title">Your account</string>
+    <string name="confirm_edits_title">Save</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="user_name_hint">Name</string>
     <string name="user_surname_hint">Surname</string>
     <string name="user_email_hint">E-mail</string>
     <string name="user_password_hint">Password</string>
     <string name="user_password_confirm_hint">Confirm password</string>
+    <string name="user_delivery_address_hint">Delivery address</string>
 
     <string name="user_password_invalid_short">Password length is too short</string>
     <string name="user_password_invalid_digit">Not enough digits</string>
@@ -68,6 +76,11 @@
     <string name="user_privacy_policy_check_missing">You must accept our privacy policy</string>
     <string name="user_register_error_message">Please try again later</string>
     <string name="user_mandatory_field">Mandatory field</string>
+    <string name="user_edit_data_title">Edit user data</string>
+    <string name="user_edit_data_completed">Update completed!</string>
+    <string name="user_edit_name_surname_error_message">Unable to update your name and surname!</string>
+    <string name="user_edit_email_error_title">Unable to update email</string>
+    <string name="user_edit_email_error_message">Please check if the password is correct or try again later</string>
     <string name="app_version_title">Version</string>
     <string name="copyright_info">Here you can write your copyright</string>
     <string name="theme_light">Light</string>
@@ -77,6 +90,7 @@
     <string name="title_images_main">Restaurant images</string>
     <string name="main_new_order">New order</string>
 
+    <string name="search_hint">Search…</string>
     <string name="food_quantity_title">Quantity</string>
     <string name="food_ingredients_edit_title">Edit ingredients</string>
     <string name="increment_title">Increment</string>
@@ -108,4 +122,28 @@
     <string name="order_connection_error_message">Check your internet connection and try again</string>
     <string name="order_login_error_title">You are not logged in</string>
     <string name="order_login_error_message">Error while submitting new order, please log in and try again</string>
+    <string name="order_date">Order date: %1$s</string>
+    <string name="order_delivery_date">Delivery date: %1$s</string>
+    <string name="order_delivery_options_title">Delivery options</string>
+    <string name="order_no_delivery">Pick up at the venue</string>
+    <string name="order_delivery_to_address">Deliver to this address</string>
+    <string name="order_change_delivery_address">Change address</string>
+    <string name="order_add_delivery_address">Add a new address</string>
+    <string name="order_select_delivery_address">Select address</string>
+    <string name="my_orders_title">My orders</string>
+    <string name="order_delivery_datetime_title">Delivery date and time</string>
+    <string name="order_delivery_date_option" translatable="false">%1$s %2$s</string>
+    <string name="order_delivery_hour_option" translatable="false">%1$s:%2$s</string>
+    <string name="order_delivery_datetime_error_title">No delivery datetime selected</string>
+    <string name="order_delivery_datetime_error_message">Please select delivery datetime before ordering</string>
+
+    <string name="order_delivery_address">Address</string>
+    <string name="order_postcode">Postcode</string>
+    <string name="order_city">City</string>
+    <string name="order_province">Province</string>
+    <string name="order_set_default_address">Set as default address</string>
+    <string name="new_address_success">Added new address</string>
+    <string name="new_address_error_title">Something went wrong</string>
+    <string name="new_address_error_message">Error while creating this address, check if it already exists or try again later</string>
+
 </resources>

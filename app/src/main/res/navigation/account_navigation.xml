@@ -8,5 +8,31 @@
         android:id="@+id/fragment_account"
         android:name="com.projectrestaurant.ui.account.FragmentAccount"
         android:label="@string/account_title"
-        tools:layout="@layout/fragment_account"/>
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_fragment_account_to_fragment_edit_user_data"
+            app:destination="@id/fragment_edit_user_data" />
+        <action
+            android:id="@+id/action_fragment_account_to_fragment_change_delivery_address"
+            app:destination="@id/fragment_change_delivery_address" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_change_delivery_address"
+        android:name="com.projectrestaurant.ui.account.FragmentChangeDeliveryAddress"
+        android:label="@string/order_change_delivery_address"
+        tools:layout="@layout/fragment_change_delivery_address">
+        <action
+            android:id="@+id/action_fragment_change_delivery_address_to_fragment_new_address"
+            app:destination="@id/fragment_new_address"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_new_address"
+        android:name="com.projectrestaurant.ui.account.FragmentNewAddress"
+        android:label="@string/order_add_delivery_address"
+        tools:layout="@layout/fragment_new_address"/>
+    <fragment
+        android:id="@+id/fragment_edit_user_data"
+        android:name="com.projectrestaurant.ui.account.FragmentEditUserData"
+        android:label="@string/user_edit_data_title"
+        tools:layout="@layout/fragment_edit_user_data"/>
 </navigation>

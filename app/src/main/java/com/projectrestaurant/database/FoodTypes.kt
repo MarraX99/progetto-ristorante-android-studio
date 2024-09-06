@@ -21,6 +21,6 @@ data class FoodType(
 interface FoodTypeDao {
     @Insert suspend fun insert(vararg types: FoodType)
     @Delete suspend fun delete(type: FoodType)
-    @Query(value = "Select * from FoodTypes") suspend fun getAllFoodTypes(): List<FoodType>?
+    @Query(value = "Select * from FoodTypes") suspend fun getAllFoodTypes(): List<FoodType>
     @Query(value = "Select case when exists(Select 1 from FoodTypes) then 1 else 0 end") suspend fun exists(): Boolean
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="food_descriptions">
+    <string-array name="food_descriptions" translatable="true">
         <item>Our margherita with fresh champignon mushrooms, olives, egg yolk, raw ham from Norcia and artichokes</item>
         <item>Base created using fiordilatte mozzarella with the addition of eggplants, zucchinis, potatoes and radish</item>
         <item>Our margherita with fresh champignon mushrooms and parsley</item>

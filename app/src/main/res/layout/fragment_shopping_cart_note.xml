@@ -4,12 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.order.FragmentNote">
-    <data>
-        <variable
-            name="viewModel"
-            type="com.projectrestaurant.viewmodel.FoodOrderViewModel"/>
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
@@ -24,7 +18,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout1"
             android:layout_width="0dp"
@@ -57,7 +51,7 @@
                 android:maxLines="10"
                 android:minLines="6"
                 android:nestedScrollingEnabled="true"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_note"
@@ -74,6 +68,6 @@
             android:text="@string/order_add_note_message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_add_note" />
+            app:layout_constraintTop_toBottomOf="@id/button_add_note"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

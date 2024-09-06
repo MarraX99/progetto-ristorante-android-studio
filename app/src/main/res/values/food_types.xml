@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="food_types">
+    <string-array name="food_types" translatable="true">
         <item>Classic pizzas</item>
         <item>Special pizzas</item>
         <item>Fried</item>

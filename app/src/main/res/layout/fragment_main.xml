@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_images"
             style="@style/CardView.Main"
             android:layout_height="150dp"
@@ -31,9 +31,9 @@
                 android:outAnimation="@android:anim/slide_out_right"
                 android:overScrollMode="ifContentScrolls"
                 android:scrollIndicators="bottom|end"
-                android:scrollbarStyle="insideOverlay" />
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
+                android:scrollbarStyle="insideOverlay"/>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_new_order"
             style="@style/CardView.Main"
             android:layout_height="130dp"
@@ -57,35 +57,31 @@
                 android:text="@string/main_new_order"
                 android:textAllCaps="true"
                 android:textColor="?attr/colorOnPrimary"/>
-        </androidx.cardview.widget.CardView>
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/card_view_coupons"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="130dp"-->
-<!--            android:layout_margin="10dp"-->
-<!--            app:cardCornerRadius="10dp"-->
-<!--            app:cardElevation="6dp"-->
-<!--            app:cardUseCompatPadding="true"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/card_view_new_order">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                app:srcCompat="@drawable/main_coupons" />-->
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="bottom"-->
-<!--                android:background="@color/gray_translucent"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/main_coupons"-->
-<!--                android:textAllCaps="true"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold" />-->
-<!--        </androidx.cardview.widget.CardView>-->
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view_order_list"
+            style="@style/CardView.Main"
+            android:layout_height="130dp"
+            android:layout_margin="10dp"
+            app:cardUseCompatPadding="false"
+            app:contentPadding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_view_new_order">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/main_new_order"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/main_new_order"/>
+            <TextView
+                style="@style/TextViewTitleColorVariant"
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/gray_translucent"
+                android:text="@string/my_orders_title"
+                android:textAllCaps="true"
+                android:textColor="?attr/colorOnPrimary"/>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

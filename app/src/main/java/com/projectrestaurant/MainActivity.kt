@@ -15,19 +15,25 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.projectrestaurant.database.RestaurantDB
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private lateinit var auth: FirebaseAuth
     private lateinit var sharedPrefs: SharedPreferences
+    lateinit var auth: FirebaseAuth
+    private lateinit var firestoreDB: FirebaseFirestore
+    private lateinit var restaurantDB: RestaurantDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPrefs = getSharedPreferences(getString(com.projectrestaurant.R.string.preference_file_key), Context.MODE_PRIVATE)
         FirebaseApp.initializeApp(application)
         auth = FirebaseAuth.getInstance()
+        sharedPrefs = getSharedPreferences(getString(com.projectrestaurant.R.string.preference_file_key), Context.MODE_PRIVATE)
+        firestoreDB = FirebaseFirestore.getInstance()
+        restaurantDB = RestaurantDB.getInstance(application)
         val themeMode = sharedPrefs.getInt(getString(R.string.saved_theme_key), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         when (themeMode) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

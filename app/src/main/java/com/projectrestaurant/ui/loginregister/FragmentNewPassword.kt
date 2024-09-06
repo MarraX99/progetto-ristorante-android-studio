@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.projectrestaurant.R.string
 import com.projectrestaurant.databinding.FragmentNewPasswordBinding
 import com.projectrestaurant.viewmodel.LoginRegisterViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -23,11 +23,9 @@ class FragmentNewPassword : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentNewPasswordBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.emailContainer.setOnClickListener {
@@ -50,7 +48,7 @@ class FragmentNewPassword : Fragment() {
                     binding.buttonNewPassword.isClickable = true
                     return@setOnClickListener }
             }
-            GlobalScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 binding.progressBarNewPassword.visibility = View.VISIBLE
                 binding.progressBarNewPassword.animate()
                 val result = withContext(Dispatchers.IO) { viewModel.resetPassword(binding.editTextEmail.text.toString()) }
@@ -58,7 +56,7 @@ class FragmentNewPassword : Fragment() {
                     AlertDialog.Builder(this@FragmentNewPassword.requireContext())
                         .setTitle(string.reset_password_email_sent_title)
                         .setMessage(string.reset_password_email_sent_message)
-                        .setPositiveButton(string.ok) { _, _ -> }.show()
+                        .setPositiveButton(string.ok) { _, _ -> findNavController().navigateUp() }.show()
                 } else {
                     AlertDialog.Builder(this@FragmentNewPassword.requireContext())
                         .setTitle(string.reset_password_email_error_title)

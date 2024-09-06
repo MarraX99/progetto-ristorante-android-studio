@@ -8,44 +8,42 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.projectrestaurant.CartProduct
-import com.projectrestaurant.IngredientAdapter
+import com.projectrestaurant.adapter.IngredientAdapter
 import com.projectrestaurant.database.Food
 import com.projectrestaurant.database.Ingredient
 import com.projectrestaurant.databinding.FragmentShoppingCartEditProductBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FragmentEditCartProduct: Fragment() {
     private lateinit var binding: FragmentShoppingCartEditProductBinding
-    private val viewModel: FoodOrderViewModel by activityViewModels()
     private lateinit var navController: NavController
+    private val viewModel: FoodOrderViewModel by activityViewModels()
     private val args: FragmentEditCartProductArgs by navArgs<FragmentEditCartProductArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentShoppingCartEditProductBinding.inflate(inflater, container, false)
         binding.recyclerViewFoodIngredients.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewFoodIngredients.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        navController = findNavController()
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setFoodQuantity(args.bundle.getInt("quantity"))
-        viewModel.addToPrice(args.bundle.getString("price")!!.toDouble())
+        viewModel.addToPrice(args.bundle.getDouble("price"))
         val food = args.bundle.getParcelable<Food>("food")
         if (food != null) {
             binding.textViewFoodTitle.text = food.name
@@ -54,31 +52,27 @@ class FragmentEditCartProduct: Fragment() {
                 .placeholder(com.projectrestaurant.R.drawable.placeholder)
                 .error(com.projectrestaurant.R.drawable.placeholder).into(binding.imageViewFood)
         }
-        GlobalScope.launch(Dispatchers.Main) {
-            val ingredientList = withContext(Dispatchers.IO) { viewModel.getIngredientsFromFood(food!!, resources.getStringArray(com.projectrestaurant.R.array.ingredient_names)) }
-            if (ingredientList != null) {
-                if(ingredientList.isEmpty()) {
-                    binding.recyclerViewFoodIngredients.adapter = IngredientAdapter(listOf(), requireContext(), viewModel)
-                } else {
-                    val adapter = IngredientAdapter(ingredientList, requireContext(), viewModel)
-                    var tmp = args.bundle.getParcelableArrayList<Ingredient>("extraIngredients")
-                    if (tmp != null) for(i in tmp) adapter.addToExtraIngredients(i)
-                    tmp = args.bundle.getParcelableArrayList("removedIngredients")
-                    if (tmp != null) for(i in tmp) adapter.addToRemovedIngredients(i)
-                    binding.textView3.visibility = View.VISIBLE
-                    binding.materialDivider2.visibility = View.VISIBLE
-                    binding.recyclerViewFoodIngredients.adapter = adapter
-                }
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            val ingredientList = withContext(Dispatchers.IO) { viewModel.getIngredientsFromFood(food!!) }
+            val adapter = IngredientAdapter(ingredientList, requireActivity().application, viewModel)
+            if(ingredientList.isNotEmpty()) {
+                var tmp = args.bundle.getParcelableArrayList<Ingredient>("extraIngredients")
+                if (tmp != null) for(i in tmp) adapter.addToExtraIngredients(i)
+                tmp = args.bundle.getParcelableArrayList("removedIngredients")
+                if (tmp != null) for(i in tmp) adapter.addToRemovedIngredients(i)
+                binding.textView3.visibility = View.VISIBLE
+                binding.materialDivider2.visibility = View.VISIBLE
+                binding.recyclerViewFoodIngredients.adapter = adapter
             }
         }
         binding.buttonIncrement.setOnClickListener {
             viewModel.incrementFoodQuantity()
-            viewModel.addToPrice(food!!.unitPrice.toDouble())
+            viewModel.addToPrice(food!!.unitPrice)
         }
         binding.buttonDecrement.setOnClickListener {
             if(viewModel.foodQuantity.value!! > 1) {
                 viewModel.decrementFoodQuantity()
-                viewModel.removeToPrice(food!!.unitPrice.toDouble())
+                viewModel.removeToPrice(food!!.unitPrice)
             }
         }
         binding.cardViewShoppingCart.setOnClickListener{
@@ -91,15 +85,15 @@ class FragmentEditCartProduct: Fragment() {
             args.bundle.putParcelableArrayList("removedIngredients",
                 (binding.recyclerViewFoodIngredients.adapter as IngredientAdapter).getRemovedIngredients())
             args.bundle.putInt("quantity", viewModel.foodQuantity.value!!)
-            args.bundle.putString("price", viewModel.totalPriceString.value!!)
-            GlobalScope.launch(Dispatchers.Main) {
+            args.bundle.putDouble("price", viewModel.totalPrice.value!!)
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 val result = withContext(Dispatchers.IO){
                     viewModel.updateCartProduct(CartProduct(
                         args.bundle.getString("cartProductId")!!,
                         args.bundle.getParcelable("food")!!,
                         args.bundle.getParcelableArrayList("extraIngredients")!!,
                         args.bundle.getParcelableArrayList("removedIngredients")!!,
-                        args.bundle.getInt("quantity"), args.bundle.getString("price")!!))
+                        args.bundle.getInt("quantity"), args.bundle.getDouble("price")))
                 }
                 if(result) {
                     setFragmentResult("modifiedCartProduct", args.bundle)

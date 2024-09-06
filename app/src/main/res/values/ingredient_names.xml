@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="ingredient_names">
+    <string-array name="ingredient_names" translatable="true">
         <item>Artichokes</item>
         <item>Fiordilatte mozzarella</item>
         <item>Champignon mushrooms</item>

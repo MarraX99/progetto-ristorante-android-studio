@@ -1,33 +1,39 @@
 package com.projectrestaurant.ui.order
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet
+import android.view.inputmethod.InputMethodManager
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.projectrestaurant.FoodListAdapter
+import com.projectrestaurant.adapter.FoodListAdapter
 import com.projectrestaurant.database.Food
 import com.projectrestaurant.databinding.FragmentFoodListBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FragmentFoodList: Fragment() {
+class FragmentFoodList: Fragment(), MenuProvider {
     private lateinit var binding: FragmentFoodListBinding
+    private lateinit var navController: NavController
     private val viewModel: FoodOrderViewModel by activityViewModels()
     private val args: FragmentFoodListArgs by navArgs<FragmentFoodListArgs>()
-    private lateinit var navController: NavController
-    private val constraintSet: ConstraintSet = ConstraintSet()
+    private lateinit var adapter: FoodListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -37,31 +43,25 @@ class FragmentFoodList: Fragment() {
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        constraintSet.clone(binding.constraintLayout)
-        GlobalScope.launch(Dispatchers.Main) {
+        adapter = FoodListAdapter(navController, requireActivity().application)
+        val menuHost = requireActivity() as MenuHost
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.STARTED)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             lateinit var foodList: List<Food>
             var isShoppingCartEmpty: Boolean?
             withContext(Dispatchers.IO) {
-                foodList = if(viewModel.foodTableExists()) {
-                    viewModel.getFoodList(args.foodType, resources.getStringArray(com.projectrestaurant.R.array.food_names),
-                        resources.getStringArray(com.projectrestaurant.R.array.food_descriptions))!!
-                } else {
-                    viewModel.getFoodsFromRemoteDatabase()
-                    viewModel.getFoodList(args.foodType, resources.getStringArray(com.projectrestaurant.R.array.food_names),
-                        resources.getStringArray(com.projectrestaurant.R.array.food_descriptions))!!
-                }
+                foodList = viewModel.getFoodList(args.foodType)
                 isShoppingCartEmpty = if(viewModel.isLoggedIn()) viewModel.isShoppingCartEmpty() else null
             }
-            if(isShoppingCartEmpty != null && !isShoppingCartEmpty!!) {
-                constraintSet.constrainPercentHeight(binding.cardViewFoodList.id, 0.9F)
-                constraintSet.constrainPercentHeight(binding.buttonShoppingCart.id, 0.08F)
-                constraintSet.applyTo(binding.constraintLayout)
-            }
-            binding.recyclerViewFoodList.adapter = FoodListAdapter(foodList, view.findNavController(), requireContext())
+            if(isShoppingCartEmpty != null && !isShoppingCartEmpty!!)
+                binding.buttonShoppingCart.visibility = View.VISIBLE
+            adapter.setFoodData(foodList)
+            binding.recyclerViewFoodList.adapter = adapter
+            binding.editTextSearch.addTextChangedListener { adapter.filter.filter(it) }
         }
+
         binding.buttonShoppingCart.setOnClickListener {
             it.isClickable = false
             binding.progressBar.isIndeterminate = true
@@ -80,5 +80,27 @@ class FragmentFoodList: Fragment() {
         super.onDestroy()
         viewModel.resetPrice()
         viewModel.setFoodQuantity(1)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(com.projectrestaurant.R.menu.food_order_menu, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        when(menuItem.itemId) {
+            com.projectrestaurant.R.id.menu_search -> {
+                if(binding.searchContainer.visibility == View.VISIBLE) binding.searchContainer.visibility = View.GONE
+                else binding.searchContainer.visibility = View.VISIBLE
+                closeKeyboard(requireActivity())
+                return true
+            }
+            else -> return false
+        }
+    }
+
+    private fun closeKeyboard(activity: Activity) {
+        val manager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view: View = if(activity.currentFocus != null) activity.currentFocus!! else View(activity)
+        manager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

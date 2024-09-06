@@ -15,7 +15,7 @@
             app:destination="@id/fragment_food_list"/>
         <action
             android:id="@+id/action_fragment_food_type_to_fragment_shopping_cart"
-            app:destination="@id/fragment_shopping_cart" />
+            app:destination="@id/fragment_shopping_cart"/>
     </fragment>
     <fragment
         android:id="@+id/fragment_food_list"
@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_fragment_shopping_cart_to_fragment_edit_cart_product"
             app:destination="@id/fragment_edit_cart_product" />
+        <action
+            android:id="@+id/action_fragment_shopping_cart_to_fragment_change_delivery_address"
+            app:destination="@id/fragment_change_delivery_address"/>
     </fragment>
     <fragment
         android:id="@+id/fragment_note"
@@ -66,6 +69,20 @@
         tools:layout="@layout/fragment_shopping_cart_edit_product">
         <argument
             android:name="bundle"
-            app:argType="android.os.Bundle" />
+            app:argType="android.os.Bundle"/>
     </fragment>
+    <fragment
+        android:id="@+id/fragment_change_delivery_address"
+        android:name="com.projectrestaurant.ui.account.FragmentChangeDeliveryAddress"
+        android:label="@string/order_select_delivery_address"
+        tools:layout="@layout/fragment_change_delivery_address">
+        <action
+            android:id="@+id/action_fragment_change_delivery_address_to_fragment_new_address"
+            app:destination="@id/fragment_new_address"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_new_address"
+        android:name="com.projectrestaurant.ui.account.FragmentNewAddress"
+        android:label="@string/order_add_delivery_address"
+        tools:layout="@layout/fragment_new_address"/>
 </navigation>

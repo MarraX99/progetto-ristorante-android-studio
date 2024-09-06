@@ -8,39 +8,36 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.projectrestaurant.databinding.FragmentShoppingCartNoteBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FragmentNote: Fragment() {
     private lateinit var binding: FragmentShoppingCartNoteBinding
-    private val viewModel: FoodOrderViewModel by activityViewModels()
     private lateinit var navController: NavController
+    private val viewModel: FoodOrderViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentShoppingCartNoteBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
         navController = findNavController()
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        GlobalScope.launch(Dispatchers.Main) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             val note = withContext(Dispatchers.IO) { viewModel.getOrderNote() }
             binding.editText1.text = SpannableStringBuilder(note)
         }
         binding.buttonAddNote.setOnClickListener {
             it.isClickable = false
-            GlobalScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 it.isClickable = false
                 binding.progressBar.isIndeterminate = true
                 binding.constraintLayout.overlay.add(binding.progressBar)

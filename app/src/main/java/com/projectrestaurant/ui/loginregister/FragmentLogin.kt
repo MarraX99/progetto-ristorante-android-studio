@@ -1,5 +1,6 @@
 package com.projectrestaurant.ui.loginregister
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +9,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.projectrestaurant.MainActivity
 import com.projectrestaurant.databinding.FragmentLoginBinding
 import com.projectrestaurant.R.string
 import com.projectrestaurant.viewmodel.LoginRegisterViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,11 +29,9 @@ class FragmentLogin : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
@@ -86,16 +85,20 @@ class FragmentLogin : Fragment() {
                     binding.buttonLogin.isClickable = true
                     return@setOnClickListener }
             }
-            GlobalScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 binding.progressBarLogin.visibility = View.VISIBLE
                 binding.progressBarLogin.animate()
                 val result = withContext(Dispatchers.IO) {
                     viewModel.logIn(binding.editTextEmail.text.toString(), binding.editTextPassword.text.toString()) }
-                if (result) Toast.makeText(this@FragmentLogin.context, string.user_login_success, Toast.LENGTH_LONG).show()
+                if (result) {
+                    Toast.makeText(requireActivity(), string.user_login_success, Toast.LENGTH_LONG).show()
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    activity?.finish()
+                }
                 else {
                     binding.progressBarLogin.clearAnimation()
                     binding.progressBarLogin.visibility = View.GONE
-                    AlertDialog.Builder(this@FragmentLogin.requireContext()).setTitle(string.user_login_error_title)
+                    AlertDialog.Builder(requireContext()).setTitle(string.user_login_error_title)
                         .setMessage(string.user_login_error_message)
                         .setPositiveButton(string.ok) { _, _ -> }.show()
                     binding.buttonLogin.isClickable = true }

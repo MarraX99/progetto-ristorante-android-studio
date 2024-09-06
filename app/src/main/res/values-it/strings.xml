@@ -8,11 +8,16 @@
     <string name="menu_privacy_policy">Polizza sulla privacy</string>
     <string name="menu_account">Profilo</string>
     <string name="menu_login">Accedi/Registrati</string>
+    <string name="menu_search">Cerca</string>
+    <string name="menu_edit">Modifica campi</string>
     <string name="settings_app_info">Informazioni sull\'app</string>
     <string name="settings_theme">Tema</string>
     <string name="ok">OK</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="navigation_next">Successivo</string>
+    <string name="navigation_before">Precedente</string>
+    <string name="error_field_empty">Campo vuoto</string>
 
     <string name="about_us_title">Chi siamo</string>
     <string name="about_us_content">Prototipo creato per l\'esame di Programmazione Mobile</string>
@@ -22,12 +27,14 @@
     <string name="logout_title">Esci</string>
     <string name="register_title">Registrati</string>
     <string name="account_title">Profilo</string>
+    <string name="confirm_edits_title">Salva modifiche</string>
     <string name="forgot_password">Password dimenticata?</string>
     <string name="user_name_hint">Nome</string>
     <string name="user_surname_hint">Cognome</string>
     <string name="user_email_hint">E-mail</string>
     <string name="user_password_hint">Password</string>
     <string name="user_password_confirm_hint">Conferma password</string>
+    <string name="user_delivery_address_hint">Indirizzo di spedizione</string>
 
     <string name="user_password_invalid_short">Password troppo corta</string>
     <string name="user_password_invalid_digit">Numero di cifre insufficiente</string>
@@ -64,6 +71,11 @@
     <string name="user_privacy_policy_check_missing">Devi accettare la nostra polizza sulla privacy</string>
     <string name="user_register_error_message">Riprova più tardi</string>
     <string name="user_mandatory_field">Campo obbligatorio</string>
+    <string name="user_edit_data_title">Modifica dati utente</string>
+    <string name="user_edit_data_completed">Modifiche salvate!</string>
+    <string name="user_edit_name_surname_error_message">Impossibile aggiornare il tuo nome e cognome!</string>
+    <string name="user_edit_email_error_title">Impossibile aggiornare l\'e-mail</string>
+    <string name="user_edit_email_error_message">Controlla se la password è corretta o riprova più tardi</string>
     <string name="app_version_title">Versione</string>
     <string name="copyright_info">Scrivi qui il tuo copyright</string>
     <string name="theme_light">Chiaro</string>
@@ -73,6 +85,7 @@
     <string name="title_images_main">Immagini di ristoranti</string>
     <string name="main_new_order">Nuovo ordine</string>
 
+    <string name="search_hint">Cerca…</string>
     <string name="food_quantity_title">Quantità</string>
     <string name="food_ingredients_edit_title">Modifica ingredienti</string>
     <string name="increment_title">Incrementa</string>
@@ -102,4 +115,25 @@
     <string name="order_connection_error_message">Controlla la tua connessione ad internet e riprova</string>
     <string name="order_login_error_title">Non hai effettuato l\'accesso</string>
     <string name="order_login_error_message">Si è verificato un errore nella creazione dell\'ordine, per favore accedi e riprova</string>
+    <string name="order_date">Data ordine: %1$s</string>
+    <string name="order_delivery_date">Data di consegna: %1$s</string>
+    <string name="order_delivery_options_title">Opzioni di consegna</string>
+    <string name="order_no_delivery">Ritiro al locale</string>
+    <string name="order_delivery_to_address">Consegna a questo indirizzo</string>
+    <string name="order_change_delivery_address">Cambia indirizzo</string>
+    <string name="order_add_delivery_address">Aggiungi indirizzo</string>
+    <string name="order_select_delivery_address">Seleziona indirizzo</string>
+    <string name="my_orders_title">I miei ordini</string>
+    <string name="order_delivery_datetime_title">Data e ora di consegna</string>
+    <string name="order_delivery_datetime_error_title">Data ed ora di consegna non selezionati</string>
+    <string name="order_delivery_datetime_error_message">Prima di ordinare seleziona data ed ora di consegna</string>
+
+    <string name="order_delivery_address">Indirizzo</string>
+    <string name="order_postcode">CAP</string>
+    <string name="order_city">Città</string>
+    <string name="order_province">Provincia</string>
+    <string name="order_set_default_address">Imposta come indirizzo predefinito</string>
+    <string name="new_address_success">Aggiunto nuovo indirizzo</string>
+    <string name="new_address_error_title">Qualcosa è andato storto</string>
+    <string name="new_address_error_message">Errore durante l\'aggiunta del nuovo indirizzo, controlla se esiste già o riprova più tardi</string>
 </resources>

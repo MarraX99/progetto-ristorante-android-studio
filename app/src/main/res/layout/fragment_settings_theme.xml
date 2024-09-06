@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.settings.FragmentTheme">
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_buttons"
         style="@style/CardView.Main"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,18 +20,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_theme_light"
                 style="@style/RadioButton"
                 android:text="@string/theme_light"/>
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_theme_dark"
                 style="@style/RadioButton"
                 android:text="@string/theme_dark"/>
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_theme_system"
                 style="@style/RadioButton"
                 android:text="@string/theme_system" />
         </RadioGroup>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

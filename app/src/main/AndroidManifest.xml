@@ -42,12 +42,14 @@
         </activity>
         <activity
             android:name=".ui.loginregister.ActivityLoginRegister"
+            android:windowSoftInputMode="stateVisible|adjustNothing"
             android:exported="true"
             android:label="@string/login_title"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".ui.order.ActivityOrder"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="true"
             android:label="@string/main_new_order"
             android:parentActivityName=".MainActivity">
@@ -58,6 +60,11 @@
             android:label="@string/account_title"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity
+            android:name=".ui.userorders.ActivityUserOrders"
+            android:exported="true"
+            android:label="@string/my_orders_title"
+            android:parentActivityName=".MainActivity">
+        </activity>
 	</application>
-
 </manifest>

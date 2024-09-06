@@ -1,15 +1,19 @@
 package com.projectrestaurant.viewmodel
 
+import android.app.Application
 import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.projectrestaurant.database.UserDao
+import com.projectrestaurant.database.Address
+import com.projectrestaurant.database.RestaurantDB
 import com.projectrestaurant.database.User
 import kotlinx.coroutines.tasks.await
 
-class LoginRegisterViewModel(): ViewModel() {
+class LoginRegisterViewModel(private val application: Application): AndroidViewModel(application) {
     private val MINIMUM_PASSWORD_LENGTH = 8
     private val MINIMUM_LOWER_CASE_COUNT = 2
     private val MINIMUM_UPPER_CASE_COUNT = 2
@@ -17,7 +21,7 @@ class LoginRegisterViewModel(): ViewModel() {
     private val MINIMUM_SPECIAL_COUNT = 1
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestoreDB: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private lateinit var userDao: UserDao
+    private val restaurantDB: RestaurantDB = RestaurantDB.getInstance(application)
 
     fun validateEmail(email: String): HashMap<String,Boolean> {
         val checks = HashMap<String,Boolean>(2)
@@ -41,13 +45,20 @@ class LoginRegisterViewModel(): ViewModel() {
     suspend fun logIn(email: String, password: String): Boolean {
         val result = try {
             auth.signInWithEmailAndPassword(email, password).await()
-            Log.i("FirebaseAuth", "Logged in as ${auth.currentUser?.uid}")
+            Log.i("FirebaseAuth", "Authentication state changed to ${auth.currentUser!!.uid}")
             true
         } catch(exception: Exception) {
             Log.e("FirebaseAuth", "Login failed", exception)
             false
         }
-        return result
+        if(result) {
+            if(!(restaurantDB.userDao().exists(auth.currentUser!!.uid))) {
+                val user = firestoreDB.document("users/${auth.currentUser!!.uid}").get().await()
+                addUserToDatabase(user)
+                getDeliveryAddressesFromRemoteDatabase(user)
+            }
+        }
+        return result //result = true => all ok
     }
 
     suspend fun resetPassword(email: String): Boolean {
@@ -59,7 +70,7 @@ class LoginRegisterViewModel(): ViewModel() {
             Log.e("FirebaseAuth", "Failed to send password reset email to $email")
             false
         }
-        return result
+        return result //result = true => all ok
     }
 
     suspend fun register(name: String, surname: String, email: String, password: String, acceptedPrivacyPolicy: Boolean): Boolean {
@@ -75,8 +86,10 @@ class LoginRegisterViewModel(): ViewModel() {
         //if firebase user creation is successful creates a new user document in firestore
         if(result) {
             result = try {
-                val user = hashMapOf("name" to name, "surname" to surname, "email" to email, "accepted_privacy_policy" to acceptedPrivacyPolicy.toString())
-                firestoreDB.collection("users").document(auth.currentUser!!.uid).set(user).await()
+                firestoreDB.document("users/${auth.currentUser!!.uid}")
+                    .set(hashMapOf("name" to name, "surname" to surname, "email" to email,
+                        "accepted_privacy_policy" to acceptedPrivacyPolicy,
+                        "default_delivery_address" to null)).await()
                 Log.i("FirebaseFirestore", "DocumentSnapshot successfully written")
                 true
             } catch(exception: Exception) {
@@ -87,11 +100,31 @@ class LoginRegisterViewModel(): ViewModel() {
         }
         //if firestore document creation is successful adds the user to room database
         if(result) {
-            userDao.insert(User(auth.currentUser!!.uid, name, surname, email, acceptedPrivacyPolicy))
+            restaurantDB.userDao().insert(User(auth.currentUser!!.uid, name, surname, email, acceptedPrivacyPolicy))
             Log.i("RoomDatabase", "User ${auth.currentUser!!.uid} successfully added to database")
         }
         return result //result = true => all ok
     }
 
-    fun setUserDao(dao: UserDao) { userDao = dao }
+    /* PRIVATE FUNCTIONS HERE */
+
+    private suspend fun addUserToDatabase(user: DocumentSnapshot) {
+        Log.i("RoomDatabase", "Adding data for user ${auth.currentUser!!.uid}...")
+        restaurantDB.userDao().insert(User(auth.currentUser!!.uid, user.data!!["name"] as String, user.data!!["surname"] as String,
+            user.data!!["email"] as String, user.data!!["accepted_privacy_policy"] as Boolean))
+        Log.i("RoomDatabase", "User ${auth.currentUser!!.uid} added to database")
+    }
+
+    private suspend fun getDeliveryAddressesFromRemoteDatabase(user: DocumentSnapshot) {
+        try {
+            Log.i("FirebaseFirestore", "Retrieving address data for user ${auth.currentUser!!.uid}...")
+            val addresses = firestoreDB.collection("users/${auth.currentUser!!.uid}/delivery_addresses").get().await()
+            for(address in addresses) {
+                restaurantDB.addressDao().insert(Address(address.id, auth.currentUser!!.uid, address.data["address"] as String,
+                    address.data["cap"] as String, address.data["city"] as String, address.data["province"] as String))
+                if(address.reference == (user.data!!["default_delivery_address"] as DocumentReference))
+                    restaurantDB.addressDao().addDefaultAddress(auth.currentUser!!.uid, address.id)
+            }
+        } catch(exception: Exception) { Log.e("FirebaseFirestore", "Error while retrieving address data for user ${auth.currentUser!!.uid}", exception) }
+    }
 }

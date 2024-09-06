@@ -9,7 +9,7 @@ data class CartProduct(
     var extraIngredients: ArrayList<Ingredient>,
     var removedIngredients: ArrayList<Ingredient>,
     var quantity: Int,
-    var price: String
+    var price: Double
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

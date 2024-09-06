@@ -37,6 +37,7 @@
         <item name="colorSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorOnSurfaceVariant</item>
         <item name="colorPrimarySurface">?attr/colorPrimary</item>
+        <item name="android:drawableTint">?attr/colorOnPrimary</item>
     </style>
 
     <style name="Theme.ProjectRestaurant.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark">
@@ -44,5 +45,6 @@
         <item name="colorSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorOnSurfaceVariant</item>
         <item name="colorPrimarySurface">?attr/colorPrimary</item>
+        <item name="android:drawableTint">?attr/colorOnPrimary</item>
     </style>
 </resources>

@@ -11,8 +11,8 @@ import androidx.room.Query
 import androidx.room.RewriteQueriesToDropUnusedColumns
 
 @Entity(tableName = "FoodIngredients", foreignKeys = [
-    ForeignKey(Food::class, arrayOf("food_id"), arrayOf("food_id"), ForeignKey.CASCADE),
-    ForeignKey(Ingredient::class, arrayOf("ingredient_id"), arrayOf("ingredient_id"), ForeignKey.CASCADE)],
+    ForeignKey(Food::class, ["food_id"], ["food_id"], ForeignKey.CASCADE, ForeignKey.CASCADE),
+    ForeignKey(Ingredient::class, ["ingredient_id"], ["ingredient_id"], ForeignKey.CASCADE, ForeignKey.CASCADE)],
     primaryKeys = ["food_id", "ingredient_id"],
     indices = [Index(value = ["food_id"]), Index(value = ["ingredient_id"])])
 data class FoodIngredient(
@@ -26,5 +26,5 @@ interface FoodIngredientDao {
     @Delete suspend fun delete(foodIngredient: FoodIngredient)
     @RewriteQueriesToDropUnusedColumns
     @Query("Select * from Ingredients i inner join FoodIngredients fi on i.ingredient_id = fi.ingredient_id where fi.food_id = :id")
-    suspend fun getIngredientsByFoodId(id: Int): List<Ingredient>?
+    suspend fun getIngredientsByFoodId(id: Int): List<Ingredient>
 }

@@ -21,8 +21,10 @@ private class DateConverter {
     @TypeConverter fun timestampFromDate(date: Date): Long = date.time
 }
 
+private val MILLISECONDS_PER_MONTH = 2592000000  //Milliseconds in 30 days
+
 @Entity(tableName = "Orders", foreignKeys = [
-    ForeignKey(User::class, ["user_id"], ["user_id"], ForeignKey.SET_NULL)],
+    ForeignKey(User::class, ["user_id"], ["user_id"], ForeignKey.CASCADE, ForeignKey.CASCADE)],
     indices = [Index(value = ["user_id"])])
 @TypeConverters(DateConverter::class)
 data class Order(
@@ -39,4 +41,16 @@ interface OrderDao {
     @Delete suspend fun delete(order: Order)
     @Query(value = "Select * from Orders where order_id = :id") suspend fun getOrderById(id: String): Order?
     @Query(value = "Delete from Orders") suspend fun deleteAllOrders()
+
+    @Query(value = "Delete from Orders where order_id in (Select order_id from Orders where user_id = :id order by order_date asc limit 1)")
+    suspend fun deleteLeastRecentOrder(id: String)
+
+    @Query(value = "Select * from Orders where user_id = :id order by order_date desc")
+    suspend fun getAllOrders(id: String): List<Order>
+
+    @Query(value = "Select case when exists(Select order_id from Orders where user_id = :id) then 1 else 0 end")
+    suspend fun exists(id: String): Boolean
+
+    @Query(value = "Delete from Orders where user_id = :userId and order_date < (:currentDate - :millisecondsReference)")
+    suspend fun deleteOlderOrders(userId: String ,currentDate: Long = Date().time, millisecondsReference: Long = MILLISECONDS_PER_MONTH)
 }

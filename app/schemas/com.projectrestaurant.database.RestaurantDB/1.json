@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "540a8898f4fde6d09088160b0472a51d",
+    "identityHash": "d7a48f0e3bfdadc4817c4ca81760403a",
     "entities": [
       {
         "tableName": "Users",
@@ -60,7 +60,7 @@
       },
       {
         "tableName": "Orders",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order_id` TEXT NOT NULL, `user_id` TEXT, `date` TEXT NOT NULL, `time` TEXT NOT NULL, `total_price` REAL NOT NULL, PRIMARY KEY(`order_id`), FOREIGN KEY(`user_id`) REFERENCES `Users`(`user_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order_id` TEXT NOT NULL, `user_id` TEXT, `order_date` INTEGER NOT NULL, `delivery_date` INTEGER NOT NULL, `total_price` REAL NOT NULL, PRIMARY KEY(`order_id`), FOREIGN KEY(`user_id`) REFERENCES `Users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "orderId",
@@ -75,15 +75,15 @@
             "notNull": false
           },
           {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "TEXT",
+            "fieldPath": "orderDate",
+            "columnName": "order_date",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "time",
-            "columnName": "time",
-            "affinity": "TEXT",
+            "fieldPath": "deliveryDate",
+            "columnName": "delivery_date",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -113,8 +113,8 @@
         "foreignKeys": [
           {
             "table": "Users",
-            "onDelete": "SET NULL",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "user_id"
             ],
@@ -126,7 +126,7 @@
       },
       {
         "tableName": "Ingredients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredient_id` INTEGER NOT NULL, `unit_price` TEXT NOT NULL, `image_uri` TEXT NOT NULL, PRIMARY KEY(`ingredient_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredient_id` INTEGER NOT NULL, `unit_price` REAL NOT NULL, `image_uri` TEXT NOT NULL, PRIMARY KEY(`ingredient_id`))",
         "fields": [
           {
             "fieldPath": "ingredientId",
@@ -137,7 +137,7 @@
           {
             "fieldPath": "unitPrice",
             "columnName": "unit_price",
-            "affinity": "TEXT",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -158,7 +158,7 @@
       },
       {
         "tableName": "Foods",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`food_id` INTEGER NOT NULL, `type` INTEGER NOT NULL, `unit_price` TEXT NOT NULL, `image_uri` TEXT NOT NULL, PRIMARY KEY(`food_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`food_id` INTEGER NOT NULL, `type` INTEGER NOT NULL, `unit_price` REAL NOT NULL, `image_uri` TEXT NOT NULL, PRIMARY KEY(`food_id`))",
         "fields": [
           {
             "fieldPath": "foodId",
@@ -175,7 +175,7 @@
           {
             "fieldPath": "unitPrice",
             "columnName": "unit_price",
-            "affinity": "TEXT",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -206,7 +206,7 @@
       },
       {
         "tableName": "FoodIngredients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`food_id` INTEGER NOT NULL, `ingredient_id` INTEGER NOT NULL, PRIMARY KEY(`food_id`, `ingredient_id`), FOREIGN KEY(`food_id`) REFERENCES `Foods`(`food_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`ingredient_id`) REFERENCES `Ingredients`(`ingredient_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`food_id` INTEGER NOT NULL, `ingredient_id` INTEGER NOT NULL, PRIMARY KEY(`food_id`, `ingredient_id`), FOREIGN KEY(`food_id`) REFERENCES `Foods`(`food_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`ingredient_id`) REFERENCES `Ingredients`(`ingredient_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "foodId",
@@ -252,7 +252,7 @@
           {
             "table": "Foods",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "food_id"
             ],
@@ -263,7 +263,7 @@
           {
             "table": "Ingredients",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "ingredient_id"
             ],
@@ -274,101 +274,76 @@
         ]
       },
       {
-        "tableName": "IngredientChanges",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`change_id` TEXT NOT NULL, `order_id` TEXT, `food_id` INTEGER, `ingredient_id` INTEGER, PRIMARY KEY(`change_id`), FOREIGN KEY(`order_id`) REFERENCES `Orders`(`order_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`food_id`) REFERENCES `Foods`(`food_id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`ingredient_id`) REFERENCES `Ingredients`(`ingredient_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "tableName": "Order_Product_Edits",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order_product_id` TEXT NOT NULL, `ingredient_id` INTEGER NOT NULL, `ingredient_quantity` TEXT NOT NULL, PRIMARY KEY(`order_product_id`, `ingredient_id`), FOREIGN KEY(`ingredient_id`) REFERENCES `Ingredients`(`ingredient_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`order_product_id`) REFERENCES `Order_Products`(`order_product_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "changeId",
-            "columnName": "change_id",
+            "fieldPath": "orderProductId",
+            "columnName": "order_product_id",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "orderId",
-            "columnName": "order_id",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "foodId",
-            "columnName": "food_id",
-            "affinity": "INTEGER",
-            "notNull": false
           },
           {
             "fieldPath": "ingredientId",
             "columnName": "ingredient_id",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
+          },
+          {
+            "fieldPath": "ingredientQuantity",
+            "columnName": "ingredient_quantity",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "change_id"
+            "order_product_id",
+            "ingredient_id"
           ]
         },
         "indices": [
           {
-            "name": "index_IngredientChanges_food_id",
-            "unique": false,
-            "columnNames": [
-              "food_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_IngredientChanges_food_id` ON `${TABLE_NAME}` (`food_id`)"
-          },
-          {
-            "name": "index_IngredientChanges_ingredient_id",
+            "name": "index_Order_Product_Edits_ingredient_id",
             "unique": false,
             "columnNames": [
               "ingredient_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_IngredientChanges_ingredient_id` ON `${TABLE_NAME}` (`ingredient_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Order_Product_Edits_ingredient_id` ON `${TABLE_NAME}` (`ingredient_id`)"
           },
           {
-            "name": "index_IngredientChanges_order_id",
+            "name": "index_Order_Product_Edits_order_product_id",
             "unique": false,
             "columnNames": [
-              "order_id"
+              "order_product_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_IngredientChanges_order_id` ON `${TABLE_NAME}` (`order_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Order_Product_Edits_order_product_id` ON `${TABLE_NAME}` (`order_product_id`)"
           }
         ],
         "foreignKeys": [
           {
-            "table": "Orders",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "order_id"
-            ],
-            "referencedColumns": [
-              "order_id"
-            ]
-          },
-          {
-            "table": "Foods",
-            "onDelete": "SET NULL",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "food_id"
-            ],
-            "referencedColumns": [
-              "food_id"
-            ]
-          },
-          {
             "table": "Ingredients",
-            "onDelete": "SET NULL",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "ingredient_id"
             ],
             "referencedColumns": [
               "ingredient_id"
+            ]
+          },
+          {
+            "table": "Order_Products",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "order_product_id"
+            ],
+            "referencedColumns": [
+              "order_product_id"
             ]
           }
         ]
@@ -398,12 +373,176 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Order_Products",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order_product_id` TEXT NOT NULL, `order_id` TEXT, `food_id` INTEGER, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, PRIMARY KEY(`order_product_id`), FOREIGN KEY(`order_id`) REFERENCES `Orders`(`order_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`food_id`) REFERENCES `Foods`(`food_id`) ON UPDATE CASCADE ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "orderProductId",
+            "columnName": "order_product_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderId",
+            "columnName": "order_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "foodId",
+            "columnName": "food_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "order_product_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Order_Products_order_id",
+            "unique": false,
+            "columnNames": [
+              "order_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Order_Products_order_id` ON `${TABLE_NAME}` (`order_id`)"
+          },
+          {
+            "name": "index_Order_Products_food_id",
+            "unique": false,
+            "columnNames": [
+              "food_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Order_Products_food_id` ON `${TABLE_NAME}` (`food_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Orders",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "order_id"
+            ],
+            "referencedColumns": [
+              "order_id"
+            ]
+          },
+          {
+            "table": "Foods",
+            "onDelete": "SET NULL",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "food_id"
+            ],
+            "referencedColumns": [
+              "food_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Addresses",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`address_id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address` TEXT NOT NULL, `cap` TEXT NOT NULL, `city` TEXT NOT NULL, `province` TEXT NOT NULL, `default_address` INTEGER NOT NULL, PRIMARY KEY(`address_id`), FOREIGN KEY(`user_id`) REFERENCES `Users`(`user_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cap",
+            "columnName": "cap",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "province",
+            "columnName": "province",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defaultAddress",
+            "columnName": "default_address",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "address_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Addresses_user_id",
+            "unique": false,
+            "columnNames": [
+              "user_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Addresses_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Users",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "user_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '540a8898f4fde6d09088160b0472a51d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7a48f0e3bfdadc4817c4ca81760403a')"
     ]
   }
 }

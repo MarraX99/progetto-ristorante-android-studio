@@ -4,16 +4,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.order.FragmentFoodList">
-    <data>
-        <variable
-            name="viewModel"
-            type="com.projectrestaurant.viewmodel.FoodOrderViewModel"/>
-    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ProgressBar
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_container"
+            style="@style/MaterialTextInputLayout"
+            android:visibility="gone"
+            app:counterEnabled="false"
+            app:layout_constraintBottom_toTopOf="@id/card_view_food_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/ic_search">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_search"
+                style="@style/MaterialTextInputEditText"
+                android:layout_height="?attr/actionBarSize"
+                android:hint="@string/search_hint"
+                android:inputType="textFilter"
+                android:maxLength="40"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,18 +36,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_food_list"
             style="@style/CardView.Main"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/button_shopping_cart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/search_container">
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
+                android:clipToPadding="true"
                 android:fillViewport="true"
                 android:orientation="vertical">
                 <androidx.recyclerview.widget.RecyclerView
@@ -45,18 +58,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </ScrollView>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_shopping_cart"
             style="@style/MaterialButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_marginBottom="6dp"
             android:text="@string/shopping_cart_go_to"
-            app:layout_constraintTop_toBottomOf="@id/card_view_food_list"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_view_food_list"
             app:layout_constraintWidth_percent="0.95"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
