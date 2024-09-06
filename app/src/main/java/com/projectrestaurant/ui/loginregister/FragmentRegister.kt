@@ -13,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import com.projectrestaurant.MainActivity
 import com.projectrestaurant.databinding.FragmentRegisterBinding
 import com.projectrestaurant.R.string
+import com.projectrestaurant.ui.order.ActivityOrder
 import com.projectrestaurant.viewmodel.LoginRegisterViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -125,7 +125,7 @@ class FragmentRegister : Fragment() {
                     binding.editTextPassword.text.toString(), binding.checkBoxPrivacyPolicy.isChecked) }
                 if(result) {
                     Toast.makeText(requireContext(), string.user_register_success, Toast.LENGTH_LONG).show()
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    startActivity(Intent(requireActivity(), ActivityOrder::class.java))
                     activity?.finish()
                 }
                 else {
