@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RewriteQueriesToDropUnusedColumns
 
@@ -22,7 +23,7 @@ data class FoodIngredient(
 
 @Dao
 interface FoodIngredientDao {
-    @Insert suspend fun insert(vararg foodIngredients: FoodIngredient)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(vararg foodIngredients: FoodIngredient)
     @Delete suspend fun delete(foodIngredient: FoodIngredient)
     @RewriteQueriesToDropUnusedColumns
     @Query("Select * from Ingredients i inner join FoodIngredients fi on i.ingredient_id = fi.ingredient_id where fi.food_id = :id")

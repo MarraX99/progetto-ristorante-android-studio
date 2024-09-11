@@ -21,8 +21,8 @@ data class Food (
     val type: Int,
     @ColumnInfo(name = "unit_price") var unitPrice: Double,
     @ColumnInfo(name = "image_uri") var imageUri: String = ""
-) : Parcelable
-{
+) : Parcelable {
+
     //Parcelling part
     constructor(parcel: Parcel) : this(
         parcel.readInt(),   //foodId

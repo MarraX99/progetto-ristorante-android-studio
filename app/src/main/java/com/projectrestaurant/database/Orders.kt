@@ -1,5 +1,7 @@
 package com.projectrestaurant.database
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Delete
@@ -33,8 +35,32 @@ data class Order(
     @ColumnInfo(name = "order_date") val orderDate: Date,
     @ColumnInfo(name = "delivery_date") val deliveryDate: Date,
     @ColumnInfo(name = "total_price") val totalPrice: Double
-)
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
+        parcel.readString(),
+        Date(parcel.readLong()),
+        Date(parcel.readLong()),
+        parcel.readDouble()
+    )
 
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(orderId)
+        parcel.writeString(userId)
+        parcel.writeLong(orderDate.time)
+        parcel.writeLong(deliveryDate.time)
+        parcel.writeDouble(totalPrice)
+    }
+
+    override fun describeContents(): Int { return 0 }
+
+    companion object CREATOR : Parcelable.Creator<Order> {
+        override fun createFromParcel(parcel: Parcel): Order { return Order(parcel) }
+
+        override fun newArray(size: Int): Array<Order?> { return arrayOfNulls(size) }
+    }
+
+}
 @Dao
 interface OrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(vararg orders: Order)

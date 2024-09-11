@@ -18,12 +18,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_food_type"
             style="@style/CardView.Main"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/button_shopping_cart"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -39,21 +39,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
             </ScrollView>
         </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_shopping_cart"
-            style="@style/MaterialButton"
-            android:layout_width="0dp"
-            android:layout_marginBottom="6dp"
-            android:text="@string/shopping_cart_go_to"
-            android:visibility="gone"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_view_food_type"
-            app:layout_constraintWidth_percent="0.95"/>
+            app:menu="@menu/bottom_navbar_menu"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

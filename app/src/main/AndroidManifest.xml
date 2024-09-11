@@ -41,8 +41,7 @@
         <activity
             android:name=".ui.order.ActivityOrder"
             android:windowSoftInputMode="adjustNothing"
-            android:exported="true"
-            android:label="@string/main_new_order">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -9,28 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.projectrestaurant.adapter.OrderAdapter
-import com.projectrestaurant.database.OrderProduct
-import com.projectrestaurant.databinding.FragmentUserOrdersBinding
+import com.projectrestaurant.adapter.OrderProductAdapter
+import com.projectrestaurant.database.OrderProductEdit
+import com.projectrestaurant.databinding.FragmentUserOrderedProductsBinding
 import com.projectrestaurant.viewmodel.OrdersViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FragmentUserOrders: Fragment() {
-    private lateinit var binding: FragmentUserOrdersBinding
+class FragmentUserOrderedProducts: Fragment() {
+    private lateinit var binding: FragmentUserOrderedProductsBinding
     private val viewModel: OrdersViewModel by activityViewModels()
+    private lateinit var adapter: OrderProductAdapter
     private val constraintSet = ConstraintSet()
-    private lateinit var adapter: OrderAdapter
     private lateinit var currentPageObserver: Observer<Int>
+    private val args: FragmentUserOrderedProductsArgs by navArgs<FragmentUserOrderedProductsArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentUserOrdersBinding.inflate(inflater, container, false)
-        adapter = OrderAdapter(requireActivity().application, viewModel, findNavController())
-        binding.recyclerViewOrders.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding = FragmentUserOrderedProductsBinding.inflate(inflater, container, false)
+        binding.recyclerViewOrderedProducts.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.lifecycleOwner = this
+        adapter = OrderProductAdapter(requireActivity().application, viewModel)
         return binding.root
     }
 
@@ -42,15 +44,19 @@ class FragmentUserOrders: Fragment() {
             constraintLayout.overlay.add(progressBar)
             progressBar.visibility = View.VISIBLE
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                val orderList = viewModel.getOrders()
-                val productList = mutableListOf<OrderProduct>()
-                for(order in orderList) productList.addAll(viewModel.getOrderProducts(order))
+                val productList = viewModel.getOrderProducts(args.order)
+                val productEditsList = mutableListOf<OrderProductEdit>()
+                val productImages = hashMapOf<Int, String?>()
+                for(product in productList) {
+                    productEditsList.addAll(viewModel.getOrderProductEdits(product))
+                    productImages[product.foodId] = viewModel.getFoodImage(product.foodId)
+                }
                 withContext(Dispatchers.Main) {
                     progressBar.isIndeterminate = false
                     constraintLayout.overlay.remove(progressBar)
                     progressBar.visibility = View.GONE
-                    recyclerViewOrders.adapter = adapter
-                    adapter.setData(orderList, productList)
+                    recyclerViewOrderedProducts.adapter = adapter
+                    adapter.setData(productList, productEditsList, productImages)
                     if(adapter.hasMultiplePages()) {
                         currentPageObserver = Observer { newValue ->
                             textViewPagesList.text = getString(com.projectrestaurant.R.string.pages_list, newValue.toString(), adapter.numberOfPages.toString())
@@ -58,7 +64,7 @@ class FragmentUserOrders: Fragment() {
                         adapter.currentPage.observe(viewLifecycleOwner, currentPageObserver)
                         buttonNextPage.setOnClickListener { adapter.goToNextPage() }
                         buttonPreviousPage.setOnClickListener { adapter.goToPreviousPage() }
-                        constraintSet.constrainPercentHeight(cardViewOrders.id, 0.9F)
+                        constraintSet.constrainPercentHeight(cardViewOrderedProducts.id, 0.9F)
                         constraintSet.constrainPercentHeight(layoutButtons.id, 0.1F)
                         constraintSet.applyTo(constraintLayout)
                     }

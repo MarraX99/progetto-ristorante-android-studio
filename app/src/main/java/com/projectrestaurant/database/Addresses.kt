@@ -45,18 +45,12 @@ data class Address(
         parcel.writeInt(if(defaultAddress) 1 else 0)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int { return 0 }
 
     companion object CREATOR : Parcelable.Creator<Address> {
-        override fun createFromParcel(parcel: Parcel): Address {
-            return Address(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): Address { return Address(parcel) }
 
-        override fun newArray(size: Int): Array<Address?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<Address?> { return arrayOfNulls(size) }
     }
 }
 

@@ -3,7 +3,6 @@ package com.projectrestaurant.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -17,6 +16,7 @@ import com.projectrestaurant.database.Order
 import com.projectrestaurant.database.OrderProductEdit
 import com.projectrestaurant.database.RestaurantDB
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Date
@@ -27,15 +27,26 @@ class OrdersViewModel(private val application: Application): AndroidViewModel(ap
     private val NUMBER_OF_MONTHS: Byte = 1
     private val MILLISECONDS_PER_MONTH = 2592000000  //Milliseconds in 30 days
     private val restaurantDB: RestaurantDB = RestaurantDB.getInstance(application)
+    val foodNames: Array<String> by lazy {
+        application.resources.getStringArray(com.projectrestaurant.R.array.food_names)
+    }
+    val ingredientNames: Array<String> by lazy {
+        application.resources.getStringArray(com.projectrestaurant.R.array.ingredient_names)
+    }
+    val monthNames: Array<String> by lazy {
+        application.resources.getStringArray(com.projectrestaurant.R.array.month_names)
+    }
 
     init {
+        val NUMBER_OF_MONTHS: Byte = 1
+        val MILLISECONDS_PER_MONTH = 2592000000  //Milliseconds in 30 days
         val currentTimestamp = Timestamp.now().toDate().time
         val greaterDate = Date(currentTimestamp - NUMBER_OF_MONTHS * MILLISECONDS_PER_MONTH)
         val userRef = firestoreDB.document("users/${auth.currentUser!!.uid}")
         val orderRef = firestoreDB.collection("orders").whereEqualTo("user", userRef)
             .whereGreaterThanOrEqualTo("order_date_time", greaterDate)
         orderRef.addSnapshotListener { _, _ ->
-            viewModelScope.launch(Dispatchers.IO) {
+            GlobalScope.launch(Dispatchers.IO) {
                 restaurantDB.orderDao().deleteOlderOrders(auth.currentUser!!.uid)
                 if(restaurantDB.orderDao().exists(auth.currentUser!!.uid)) getMostRecentOrderFromRemoteDatabase()
                 else getOrdersFromRemoteDatabase() }
@@ -72,6 +83,8 @@ class OrdersViewModel(private val application: Application): AndroidViewModel(ap
             emptyList()
         }
     }
+
+    suspend fun getFoodImage(foodId: Int): String? = restaurantDB.foodDao().getFoodById(foodId)?.imageUri
 
     /* PRIVATE FUNCTIONS HERE */
 

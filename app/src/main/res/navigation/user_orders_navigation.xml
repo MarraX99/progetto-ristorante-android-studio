@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_orders_navigation"
@@ -7,6 +8,19 @@
     <fragment
         android:id="@+id/fragment_user_orders"
         android:name="com.projectrestaurant.ui.userorders.FragmentUserOrders"
+        android:label="@string/my_orders_title"
         tools:layout="@layout/fragment_user_orders">
+        <action
+            android:id="@+id/action_fragment_user_orders_to_fragment_user_ordered_products"
+            app:destination="@id/fragment_user_ordered_products"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_user_ordered_products"
+        android:name="com.projectrestaurant.ui.userorders.FragmentUserOrderedProducts"
+        android:label="@string/my_orders_title"
+        tools:layout="@layout/fragment_user_ordered_products">
+        <argument
+            android:name="order"
+            app:argType="com.projectrestaurant.database.Order"/>
     </fragment>
 </navigation>

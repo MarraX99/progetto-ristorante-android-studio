@@ -14,6 +14,9 @@
     <string name="menu_login">Login/Register</string>
     <string name="menu_search">Search</string>
     <string name="menu_edit">Edit fields</string>
+    <string name="menu_new_order">New order</string>
+    <string name="menu_shopping_cart">Shopping cart</string>
+    <string name="menu_user_orders">My orders</string>
     <string name="settings_app_info">About this app</string>
     <string name="settings_theme">Theme</string>
     <string name="ok">OK</string>
@@ -87,9 +90,6 @@
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System default</string>
 
-    <string name="title_images_main">Restaurant images</string>
-    <string name="main_new_order">New order</string>
-
     <string name="search_hint">Search…</string>
     <string name="food_quantity_title">Quantity</string>
     <string name="food_ingredients_edit_title">Edit ingredients</string>
@@ -122,8 +122,9 @@
     <string name="order_connection_error_message">Check your internet connection and try again</string>
     <string name="order_login_error_title">You are not logged in</string>
     <string name="order_login_error_message">Error while submitting new order, please log in and try again</string>
-    <string name="order_date">Order date: %1$s</string>
-    <string name="order_delivery_date">Delivery date: %1$s</string>
+    <string name="order_date">Order date: %1$s %2$s %3$s</string>
+    <string name="order_delivery_date">Delivery date: %1$s %2$s %3$s</string>
+    <string name="order_total_product_quantity">Total quantity: %1$s</string>
     <string name="order_delivery_options_title">Delivery options</string>
     <string name="order_no_delivery">Pick up at the venue</string>
     <string name="order_delivery_to_address">Deliver to this address</string>

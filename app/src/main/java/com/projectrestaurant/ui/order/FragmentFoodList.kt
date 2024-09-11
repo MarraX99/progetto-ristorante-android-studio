@@ -21,7 +21,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.projectrestaurant.adapter.FoodListAdapter
-import com.projectrestaurant.database.Food
 import com.projectrestaurant.databinding.FragmentFoodListBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
 import kotlinx.coroutines.Dispatchers
@@ -46,33 +45,27 @@ class FragmentFoodList: Fragment(), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = FoodListAdapter(navController, requireActivity().application)
-        val menuHost = requireActivity() as MenuHost
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.STARTED)
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            lateinit var foodList: List<Food>
-            var isShoppingCartEmpty: Boolean?
-            withContext(Dispatchers.IO) {
-                foodList = viewModel.getFoodList(args.foodType)
-                isShoppingCartEmpty = if(viewModel.isLoggedIn()) viewModel.isShoppingCartEmpty() else null
+        (requireActivity() as MenuHost).addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.STARTED)
+        with(binding) {
+            progressBar.isIndeterminate = true
+            constraintLayout.overlay.add(progressBar)
+            progressBar.visibility = View.VISIBLE
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                val foodList = viewModel.getFoodList(args.foodType)
+                withContext(Dispatchers.Main) {
+                    progressBar.visibility = View.GONE
+                    progressBar.isIndeterminate = false
+                    constraintLayout.overlay.remove(progressBar)
+                    if(viewModel.isLoggedIn() && !(viewModel.isShoppingCartEmpty())) buttonShoppingCart.visibility = View.VISIBLE
+                    adapter.setFoodData(foodList)
+                    recyclerViewFoodList.adapter = adapter
+                    editTextSearch.addTextChangedListener { adapter.filter.filter(it) }
+                    buttonShoppingCart.setOnClickListener {
+                        viewModel.resetPrice()
+                        navController.navigate(com.projectrestaurant.R.id.action_fragment_food_list_to_fragment_shopping_cart)
+                    }
+                }
             }
-            if(isShoppingCartEmpty != null && !isShoppingCartEmpty!!)
-                binding.buttonShoppingCart.visibility = View.VISIBLE
-            adapter.setFoodData(foodList)
-            binding.recyclerViewFoodList.adapter = adapter
-            binding.editTextSearch.addTextChangedListener { adapter.filter.filter(it) }
-        }
-
-        binding.buttonShoppingCart.setOnClickListener {
-            it.isClickable = false
-            binding.progressBar.isIndeterminate = true
-            binding.constraintLayout.overlay.add(binding.progressBar)
-            binding.progressBar.visibility = View.VISIBLE
-            viewModel.resetPrice()
-            navController.navigate(com.projectrestaurant.R.id.action_fragment_food_list_to_fragment_shopping_cart)
-            binding.progressBar.visibility = View.GONE
-            binding.progressBar.isIndeterminate = false
-            binding.constraintLayout.overlay.remove(binding.progressBar)
-            it.isClickable = true
         }
     }
 
@@ -88,7 +81,7 @@ class FragmentFoodList: Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId) {
-            com.projectrestaurant.R.id.menu_search -> {
+            com.projectrestaurant.R.id.nav_search -> {
                 if(binding.searchContainer.visibility == View.VISIBLE) binding.searchContainer.visibility = View.GONE
                 else binding.searchContainer.visibility = View.VISIBLE
                 closeKeyboard(requireActivity())

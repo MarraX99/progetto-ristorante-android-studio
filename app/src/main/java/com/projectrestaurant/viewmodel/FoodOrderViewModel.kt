@@ -23,6 +23,9 @@ import com.projectrestaurant.database.FoodIngredient
 import com.projectrestaurant.database.FoodType
 import com.projectrestaurant.database.Ingredient
 import com.projectrestaurant.database.RestaurantDB
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Date
 
@@ -52,6 +55,21 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
     private val _totalPriceString = MutableLiveData("0.00")
     val totalPriceString: LiveData<String>
         get() = _totalPriceString
+
+    init {
+        val foodTypeRef = firestoreDB.collection("food_types")
+        val foodRef = firestoreDB.collection("foods")
+        val ingredientRef = firestoreDB.collection("ingredients")
+        foodTypeRef.addSnapshotListener { _, _ ->
+            GlobalScope.launch(Dispatchers.IO) { getFoodTypesFromRemoteDatabase() }
+        }
+        foodRef.addSnapshotListener { _, _ ->
+            GlobalScope.launch(Dispatchers.IO) { getFoodsFromRemoteDatabase() }
+        }
+        ingredientRef.addSnapshotListener { _, _ ->
+            GlobalScope.launch(Dispatchers.IO) { getIngredientsFromRemoteDatabase() }
+        }
+    }
 
 
     fun isOnline(context: Context): Boolean {
@@ -288,14 +306,13 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
 
     fun getDeliveryDays(): List<Long> {
         val days = mutableListOf<Long>()
-        var day: Calendar = Calendar.getInstance()
+        val day: Calendar = Calendar.getInstance()
         day.time = Date()
         if(day[Calendar.HOUR_OF_DAY] in 0..22 || (day[Calendar.HOUR_OF_DAY] == 23 && day[Calendar.MINUTE] <= 15)) days.add(day.timeInMillis)
         for(i: Int in 1..4) {
             day.timeInMillis += 86400000    // 1 day = 86400000 milliseconds
             days.add(day.timeInMillis)
         }
-        for(i in days.indices) println("Date ${i + 1}: ${days[i]}")
         return days
     }
 
@@ -435,5 +452,4 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
             false
         }
     }
-
 }

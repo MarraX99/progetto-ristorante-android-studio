@@ -10,6 +10,9 @@
     <string name="menu_login">Accedi/Registrati</string>
     <string name="menu_search">Cerca</string>
     <string name="menu_edit">Modifica campi</string>
+    <string name="menu_new_order">Nuovo ordine</string>
+    <string name="menu_shopping_cart">Carrello</string>
+    <string name="menu_user_orders">I miei ordini</string>
     <string name="settings_app_info">Informazioni sull\'app</string>
     <string name="settings_theme">Tema</string>
     <string name="ok">OK</string>
@@ -82,9 +85,6 @@
     <string name="theme_dark">Scuro</string>
     <string name="theme_system">Default di sistema</string>
 
-    <string name="title_images_main">Immagini di ristoranti</string>
-    <string name="main_new_order">Nuovo ordine</string>
-
     <string name="search_hint">Cerca…</string>
     <string name="food_quantity_title">Quantità</string>
     <string name="food_ingredients_edit_title">Modifica ingredienti</string>
@@ -115,8 +115,9 @@
     <string name="order_connection_error_message">Controlla la tua connessione ad internet e riprova</string>
     <string name="order_login_error_title">Non hai effettuato l\'accesso</string>
     <string name="order_login_error_message">Si è verificato un errore nella creazione dell\'ordine, per favore accedi e riprova</string>
-    <string name="order_date">Data ordine: %1$s</string>
-    <string name="order_delivery_date">Data di consegna: %1$s</string>
+    <string name="order_date">Data ordine: %1$s %2$s %3$s</string>
+    <string name="order_delivery_date">Data consegna: %1$s %2$s %3$s</string>
+    <string name="order_total_product_quantity">Quantità totale: %1$s</string>
     <string name="order_delivery_options_title">Opzioni di consegna</string>
     <string name="order_no_delivery">Ritiro al locale</string>
     <string name="order_delivery_to_address">Consegna a questo indirizzo</string>

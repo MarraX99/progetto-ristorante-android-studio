@@ -4,16 +4,15 @@ import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.projectrestaurant.CartProduct
+import com.projectrestaurant.databinding.ItemRecyclerViewCartProductBinding
 import com.projectrestaurant.ui.order.FragmentShoppingCartDirections
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,67 +33,62 @@ class CartProductAdapter(private val navController: NavController, private val c
     }
 
     //Single element of the list
-    class CartProductViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val textViewName: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_name)
-        val textViewQuantity: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_quantity)
-        val textViewPrice: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_price)
-        val textViewExtraIngredients: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_extra_ingredients)
-        val textViewRemovedIngredients: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_removed_ingredients)
-        val buttonEdit: ImageButton = itemView.findViewById(com.projectrestaurant.R.id.button_edit)
-        val buttonDelete: ImageButton = itemView.findViewById(com.projectrestaurant.R.id.button_delete)
-    }
+    class CartProductViewHolder(val binding: ItemRecyclerViewCartProductBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartProductViewHolder {
-        val itemLayout = LayoutInflater.from(parent.context).inflate(com.projectrestaurant.R.layout.item_recycler_view_cart_product, parent, false)
-        return CartProductViewHolder(itemLayout)
+        val binding = ItemRecyclerViewCartProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CartProductViewHolder(binding)
     }
 
     override fun getItemCount(): Int = productsList.size
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
         val cartElement = productsList.elementAt(position)
-        holder.textViewName.text = cartElement.food.name
-        holder.textViewPrice.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", cartElement.price))
-        holder.textViewQuantity.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_quantity, cartElement.quantity.toString())
-        if(cartElement.extraIngredients.isEmpty()) holder.textViewExtraIngredients.visibility = View.GONE
-        else {
-            holder.textViewExtraIngredients.visibility = View.VISIBLE
-            for(ingredient in cartElement.extraIngredients) stringBuilder.append("${context
-                .getString(com.projectrestaurant.R.string.ingredient_extra_prefix)} ${ingredient.name}\n")
-            holder.textViewExtraIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
-        }
-        stringBuilder = stringBuilder.clear()
-        if(cartElement.removedIngredients.isEmpty()) holder.textViewRemovedIngredients.visibility = View.GONE
-        else {
-            holder.textViewRemovedIngredients.visibility = View.VISIBLE
-            for(ingredient in cartElement.removedIngredients) stringBuilder.append("${ingredient.name}\n")
-            holder.textViewRemovedIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
-            holder.textViewRemovedIngredients.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        }
-        stringBuilder = stringBuilder.clear()
-        holder.buttonDelete.setOnClickListener {
-            AlertDialog.Builder(context).setTitle(com.projectrestaurant.R.string.shopping_cart_remove_item_title)
-                .setMessage(com.projectrestaurant.R.string.shopping_cart_remove_item_message)
-                .setPositiveButton(com.projectrestaurant.R.string.yes){ _, _ ->
-                    GlobalScope.launch(Dispatchers.Main) {
-                        withContext(Dispatchers.IO) { viewModel.deleteProductFromCart(cartElement.cartProductId) }
-                        productsList.remove(cartElement)
-                        notifyItemRemoved(position)
-                        if(itemCount == 0) navController.navigateUp()
-                    }
-                }.setNegativeButton(com.projectrestaurant.R.string.no){ _, _ -> return@setNegativeButton }.show()
-        }
-        holder.buttonEdit.setOnClickListener {
-            val bundle = Bundle()
-            with(bundle) {
-                putString("cartProductId", cartElement.cartProductId)
-                putParcelable("food", cartElement.food)
-                putParcelableArrayList("extraIngredients", cartElement.extraIngredients)
-                putParcelableArrayList("removedIngredients", cartElement.removedIngredients)
-                putInt("quantity", cartElement.quantity)
-                putDouble("price", cartElement.price)
+        with(holder.binding) {
+            textViewName.text = cartElement.food.name
+            textViewPrice.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", cartElement.price))
+            textViewQuantity.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_quantity, cartElement.quantity.toString())
+            if(cartElement.extraIngredients.isEmpty()) textViewExtraIngredients.isVisible = false
+            else {
+                textViewExtraIngredients.isVisible = true
+                for(ingredient in cartElement.extraIngredients) stringBuilder.append("${context
+                    .getString(com.projectrestaurant.R.string.ingredient_extra_prefix)} ${ingredient.name}\n")
+                textViewExtraIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
             }
-            navController.navigate(FragmentShoppingCartDirections.actionFragmentShoppingCartToFragmentEditCartProduct(bundle))
+            stringBuilder = stringBuilder.clear()
+            if(cartElement.removedIngredients.isEmpty()) textViewRemovedIngredients.isVisible = false
+            else {
+                textViewRemovedIngredients.isVisible = true
+                for(ingredient in cartElement.removedIngredients) stringBuilder.append("${ingredient.name}\n")
+                textViewRemovedIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex).toString()
+                textViewRemovedIngredients.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            }
+            stringBuilder = stringBuilder.clear()
+            buttonDelete.setOnClickListener {
+                AlertDialog.Builder(context).setTitle(com.projectrestaurant.R.string.shopping_cart_remove_item_title)
+                    .setMessage(com.projectrestaurant.R.string.shopping_cart_remove_item_message)
+                    .setPositiveButton(com.projectrestaurant.R.string.yes){ _, _ ->
+                        GlobalScope.launch(Dispatchers.Main) {
+                            withContext(Dispatchers.IO) { viewModel.deleteProductFromCart(cartElement.cartProductId) }
+                            productsList.remove(cartElement)
+                            notifyItemRemoved(position)
+                            if(itemCount == 0) navController.navigateUp()
+                        }
+                    }.setNegativeButton(com.projectrestaurant.R.string.no){ _, _ -> return@setNegativeButton }.show()
+            }
+            buttonEdit.setOnClickListener {
+                val bundle = Bundle()
+                with(bundle) {
+                    putString("cartProductId", cartElement.cartProductId)
+                    putParcelable("food", cartElement.food)
+                    putParcelableArrayList("extraIngredients", cartElement.extraIngredients)
+                    putParcelableArrayList("removedIngredients", cartElement.removedIngredients)
+                    putInt("quantity", cartElement.quantity)
+                    putDouble("price", cartElement.price)
+                }
+                navController.navigate(FragmentShoppingCartDirections.actionFragmentShoppingCartToFragmentEditCartProduct(bundle))
+            }
         }
     }
 

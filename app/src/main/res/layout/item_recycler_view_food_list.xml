@@ -2,9 +2,10 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_food_list"
+    style="@style/CardView.RecyclerViewAdapter"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    style="@style/CardView.RecyclerViewAdapter">
+    android:layout_height="150dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,6 +46,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@id/image_view_food_list"
-            app:layout_constraintTop_toBottomOf="@id/text_view_food_list_description"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_food_list_description" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

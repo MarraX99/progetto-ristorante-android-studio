@@ -2,18 +2,16 @@ package com.projectrestaurant.adapter
 
 import android.app.Application
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.imageview.ShapeableImageView
 import com.projectrestaurant.database.Food
+import com.projectrestaurant.databinding.ItemRecyclerViewFoodListBinding
 import com.projectrestaurant.ui.order.FragmentFoodListDirections
 
 class FoodListAdapter(private val navController: NavController, private val application: Application):
@@ -29,30 +27,26 @@ class FoodListAdapter(private val navController: NavController, private val appl
     }
 
     //Single element of the list
-    inner class FoodListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val imageView: ShapeableImageView = itemView.findViewById(com.projectrestaurant.R.id.image_view_food_list)
-        val textViewTitle: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_food_list_title)
-        val textViewDescription: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_food_list_description)
-        val textViewPrice: TextView = itemView.findViewById(com.projectrestaurant.R.id.text_view_food_list_price)
-    }
+    inner class FoodListViewHolder(val binding: ItemRecyclerViewFoodListBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodListViewHolder {
-        val itemLayout = LayoutInflater.from(parent.context).inflate(com.projectrestaurant.R.layout.item_recycler_view_food_list, parent, false)
-        return FoodListViewHolder(itemLayout)
+        val binding = ItemRecyclerViewFoodListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FoodListViewHolder(binding)
     }
 
 //    override fun getItemCount(): Int = fullData.size
 
     override fun onBindViewHolder(holder: FoodListViewHolder, position: Int) {
         val element = currentData.elementAt(position)
-        Glide.with(application).load(element.imageUri)
-            .placeholder(com.projectrestaurant.R.drawable.placeholder).error(com.projectrestaurant.R.drawable.placeholder).into(holder.imageView)
         with(holder) {
-            imageView.contentDescription = element.name
-            textViewTitle.text = element.name
-            textViewDescription.text = element.description
-            textViewPrice.text = application.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", element.unitPrice))
-            itemView.setOnClickListener{
+            Glide.with(application).load(element.imageUri)
+                .placeholder(com.projectrestaurant.R.drawable.placeholder).error(com.projectrestaurant.R.drawable.placeholder).into(binding.imageViewFoodList)
+            binding.imageViewFoodList.contentDescription = element.name
+            binding.textViewFoodListTitle.text = element.name
+            binding.textViewFoodListDescription.text = element.description
+            binding.textViewFoodListPrice.text = application.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", element.unitPrice))
+            binding.cardViewFoodList.setOnClickListener{
                 val action = FragmentFoodListDirections.actionFragmentFoodListToFragmentFoodIngredients(element)
                 navController.navigate(action)
             }

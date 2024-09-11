@@ -11,6 +11,7 @@ import com.projectrestaurant.databinding.ActivityUserOrdersBinding
 class ActivityUserOrders: AppCompatActivity() {
     private lateinit var binding: ActivityUserOrdersBinding
     private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserOrdersBinding.inflate(layoutInflater)

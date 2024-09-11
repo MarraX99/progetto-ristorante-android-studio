@@ -18,7 +18,7 @@ import androidx.room.Query
 data class OrderProduct(
     @ColumnInfo(name = "order_product_id") @PrimaryKey val orderProductId: String,
     @ColumnInfo(name = "order_id") val orderId: String?,
-    @ColumnInfo(name = "food_id") val foodId: Int?,
+    @ColumnInfo(name = "food_id") val foodId: Int,
     val quantity: Int,
     val price: Double,
 )
