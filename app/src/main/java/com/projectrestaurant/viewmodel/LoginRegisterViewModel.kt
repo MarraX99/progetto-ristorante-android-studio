@@ -13,7 +13,7 @@ import com.projectrestaurant.database.RestaurantDB
 import com.projectrestaurant.database.User
 import kotlinx.coroutines.tasks.await
 
-class LoginRegisterViewModel(val application: Application): AndroidViewModel(application) {
+class LoginRegisterViewModel(application: Application): AndroidViewModel(application) {
     private val MINIMUM_PASSWORD_LENGTH = 8
     private val MINIMUM_LOWER_CASE_COUNT = 2
     private val MINIMUM_UPPER_CASE_COUNT = 2
