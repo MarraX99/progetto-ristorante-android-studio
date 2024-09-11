@@ -54,14 +54,14 @@ class CartProductAdapter(private val navController: NavController, private val c
                 textViewExtraIngredients.isVisible = true
                 for(ingredient in cartElement.extraIngredients) stringBuilder.append("${context
                     .getString(com.projectrestaurant.R.string.ingredient_extra_prefix)} ${ingredient.name}\n")
-                textViewExtraIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
+                textViewExtraIngredients.text = stringBuilder.deleteCharAt(stringBuilder.lastIndex)
             }
             stringBuilder = stringBuilder.clear()
             if(cartElement.removedIngredients.isEmpty()) textViewRemovedIngredients.isVisible = false
             else {
                 textViewRemovedIngredients.isVisible = true
                 for(ingredient in cartElement.removedIngredients) stringBuilder.append("${ingredient.name}\n")
-                textViewRemovedIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex).toString()
+                textViewRemovedIngredients.text = stringBuilder.deleteCharAt(stringBuilder.lastIndex)
                 textViewRemovedIngredients.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             }
             stringBuilder = stringBuilder.clear()

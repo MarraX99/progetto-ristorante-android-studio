@@ -31,8 +31,8 @@ import java.util.Date
 
 @Suppress("UNCHECKED_CAST")
 class FoodOrderViewModel(private val application: Application): AndroidViewModel(application) {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestoreDB = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val firestoreDB by lazy { FirebaseFirestore.getInstance() }
     private val restaurantDB: RestaurantDB = RestaurantDB.getInstance(application)
     private val foodTypes: Array<String> by lazy {
         application.resources.getStringArray(com.projectrestaurant.R.array.food_types)

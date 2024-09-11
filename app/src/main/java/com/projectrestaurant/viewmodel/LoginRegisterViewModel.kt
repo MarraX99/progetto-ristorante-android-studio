@@ -13,14 +13,14 @@ import com.projectrestaurant.database.RestaurantDB
 import com.projectrestaurant.database.User
 import kotlinx.coroutines.tasks.await
 
-class LoginRegisterViewModel(private val application: Application): AndroidViewModel(application) {
+class LoginRegisterViewModel(val application: Application): AndroidViewModel(application) {
     private val MINIMUM_PASSWORD_LENGTH = 8
     private val MINIMUM_LOWER_CASE_COUNT = 2
     private val MINIMUM_UPPER_CASE_COUNT = 2
     private val MINIMUM_DIGIT_COUNT = 2
     private val MINIMUM_SPECIAL_COUNT = 1
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestoreDB: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val firestoreDB by lazy { FirebaseFirestore.getInstance() }
     private val restaurantDB: RestaurantDB = RestaurantDB.getInstance(application)
 
     fun validateEmail(email: String): HashMap<String,Boolean> {

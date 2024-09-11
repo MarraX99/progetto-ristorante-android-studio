@@ -17,8 +17,8 @@ import com.projectrestaurant.database.RestaurantDB
 import kotlinx.coroutines.tasks.await
 
 class AccountViewModel(application: Application): AndroidViewModel(application) {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestoreDB = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val firestoreDB by lazy { FirebaseFirestore.getInstance() }
     private var firestoreUser = firestoreDB.document("users/${auth.currentUser!!.uid}")
     private val restaurantDB = RestaurantDB.getInstance(application)
     private val _name = MutableLiveData("")

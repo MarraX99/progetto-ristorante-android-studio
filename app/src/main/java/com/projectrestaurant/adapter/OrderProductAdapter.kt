@@ -70,7 +70,7 @@ class OrderProductAdapter(private val application: Application, private val view
                 else {
                     for(edit in tmpList)
                         stringBuilder.append("${application.getString(com.projectrestaurant.R.string.ingredient_extra_prefix)} ${viewModel.ingredientNames[edit.ingredientId]}\n")
-                    textViewExtraIngredients.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
+                    textViewExtraIngredients.text = stringBuilder.deleteCharAt(stringBuilder.lastIndex)
                 }
                 tmpList.clear()
                 stringBuilder = stringBuilder.clear()

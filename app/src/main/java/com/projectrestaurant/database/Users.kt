@@ -39,7 +39,4 @@ interface UserDao {
 
     @Query(value = "Update Users set name = :newEmail where user_id = :id")
     suspend fun changeEmail(newEmail: String, id: String)
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert2(vararg users: User)
 }

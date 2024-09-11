@@ -21,7 +21,7 @@ class ActivityOrder: AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedPrefs: SharedPreferences
     lateinit var binding: ActivityOrderBinding
-    private val auth = FirebaseAuth.getInstance()
+    private val auth by lazy { FirebaseAuth.getInstance() }
     private lateinit var navController: NavController
     private lateinit var viewModel: FoodOrderViewModel
 
@@ -51,17 +51,15 @@ class ActivityOrder: AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        auth.addAuthStateListener {
-            if(it.currentUser != null) {
-                Log.i("FirebaseAuth", "${ActivityOrder::class.java.name} - Authentication state changed to ${it.currentUser?.uid}")
-                binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_login_register).isVisible = false
-                binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_account).isVisible = true
+        if(auth.currentUser != null) {
+            Log.i("FirebaseAuth", "${ActivityOrder::class.java.name} - Authentication state changed to ${auth.currentUser?.uid}")
+            binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_login_register).isVisible = false
+            binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_account).isVisible = true
 
-            } else {
-                Log.i("FirebaseAuth", "${ActivityOrder::class.java.name} - Authentication state changed to null")
-                binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_login_register).isVisible = true
-                binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_account).isVisible = false
-            }
+        } else {
+            Log.i("FirebaseAuth", "${ActivityOrder::class.java.name} - Authentication state changed to null")
+            binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_login_register).isVisible = true
+            binding.navView.menu.findItem(com.projectrestaurant.R.id.nav_account).isVisible = false
         }
     }
 

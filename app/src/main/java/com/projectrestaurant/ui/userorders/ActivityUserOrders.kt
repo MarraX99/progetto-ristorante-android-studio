@@ -7,13 +7,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.projectrestaurant.databinding.ActivityUserOrdersBinding
+import com.projectrestaurant.viewmodel.OrdersViewModel
 
 class ActivityUserOrders: AppCompatActivity() {
     private lateinit var binding: ActivityUserOrdersBinding
     private lateinit var navController: NavController
+    private lateinit var viewModel: OrdersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = OrdersViewModel(application)
         binding = ActivityUserOrdersBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarUserOrders)

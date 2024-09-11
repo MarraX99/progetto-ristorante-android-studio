@@ -22,8 +22,8 @@ import kotlinx.coroutines.tasks.await
 import java.util.Date
 
 class OrdersViewModel(private val application: Application): AndroidViewModel(application) {
-    private val firestoreDB = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+    private val firestoreDB by lazy { FirebaseFirestore.getInstance() }
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val NUMBER_OF_MONTHS: Byte = 1
     private val MILLISECONDS_PER_MONTH = 2592000000  //Milliseconds in 30 days
     private val restaurantDB: RestaurantDB = RestaurantDB.getInstance(application)

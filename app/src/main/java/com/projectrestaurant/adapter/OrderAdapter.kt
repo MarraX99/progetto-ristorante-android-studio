@@ -64,7 +64,7 @@ class OrderAdapter(private val application: Application, private val viewModel: 
                     total += count; i = j; j++; count = if(i < tmp.size) tmp[i].quantity else 0
                 }
                 textViewTotalQuantity.text = application.resources.getString(com.projectrestaurant.R.string.order_total_product_quantity, total.toString())
-                textViewProductsList.text = stringBuilder.delete(stringBuilder.lastIndex, stringBuilder.lastIndex)
+                textViewProductsList.text = stringBuilder.deleteCharAt(stringBuilder.lastIndex)
                 stringBuilder = stringBuilder.clear()
             }
             textViewTotalPrice.text = application.resources.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", currentOrders[position].totalPrice))
