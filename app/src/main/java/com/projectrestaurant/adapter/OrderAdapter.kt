@@ -24,11 +24,9 @@ class OrderAdapter(private val application: Application, private val viewModel: 
     private var currentOrders = listOf<Order>()
     private var stringBuilder = StringBuilder()
     private val PRODUCTS_PER_PAGE = 15
-    var numberOfPages: Int = 1
-        private set
+    var numberOfPages: Int = 1; private set
     private val _currentPage = MutableLiveData(1)
-    val currentPage: LiveData<Int>
-        get() = _currentPage
+    val currentPage: LiveData<Int> get() = _currentPage
 
     fun setData(orders: List<Order>, orderProducts: List<OrderProduct>) {
         fullOrders = orders

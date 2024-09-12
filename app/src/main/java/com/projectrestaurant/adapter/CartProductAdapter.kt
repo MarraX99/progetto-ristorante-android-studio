@@ -25,8 +25,7 @@ class CartProductAdapter(private val navController: NavController, private val c
     ListAdapter<CartProduct, CartProductAdapter.CartProductViewHolder>(ItemDiffCallback()) {
 
     private var stringBuilder: StringBuilder = StringBuilder()
-    lateinit var productsList: MutableSet<CartProduct>
-        private set
+    lateinit var productsList: MutableSet<CartProduct>; private set
     private lateinit var foodImages: HashMap<Int,String?>
 
     fun setData(data: MutableSet<CartProduct>, images: HashMap<Int,String?>) {

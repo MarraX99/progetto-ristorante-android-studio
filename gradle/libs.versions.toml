@@ -52,4 +52,3 @@ google-gms-google-services = { id = "com.google.gms.google-services", version.re
 com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragmentKtx" }
 androidx-room = { id = "androidx.room", version.ref = "roomKtx"}
-

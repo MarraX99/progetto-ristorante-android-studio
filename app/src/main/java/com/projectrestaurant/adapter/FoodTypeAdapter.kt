@@ -13,8 +13,7 @@ import com.projectrestaurant.databinding.ItemRecyclerViewFoodTypeBinding
 import com.projectrestaurant.ui.order.FragmentFoodTypeDirections
 
 class FoodTypeAdapter(private val navController: NavController, private val application: Application): ListAdapter<FoodType , FoodTypeAdapter.FoodTypeViewHolder>(
-    ItemDiffCallback()
-) {
+    ItemDiffCallback()) {
 
     private var data: List<FoodType> = listOf()
 

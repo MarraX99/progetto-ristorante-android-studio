@@ -26,11 +26,9 @@ class OrderProductAdapter(private val application: Application, private val view
     private lateinit var productImages: HashMap<Int,String?>
     private var stringBuilder = StringBuilder()
     private val PRODUCTS_PER_PAGE = 15
-    var numberOfPages: Int = 1
-        private set
+    var numberOfPages: Int = 1; private set
     private val _currentPage = MutableLiveData(1)
-    val currentPage: LiveData<Int>
-        get() = _currentPage
+    val currentPage: LiveData<Int> get() = _currentPage
 
     fun setData(orderProducts: List<OrderProduct>, orderProductEdits: List<OrderProductEdit>, images: HashMap<Int,String?>) {
         fullOrderProducts = orderProducts
