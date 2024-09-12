@@ -32,18 +32,15 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_shopping_cart"
                         style="@style/RecyclerView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                        app:layout_constraintTop_toTopOf="parent"/>
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider2"
                         android:layout_width="match_parent"
@@ -51,8 +48,7 @@
                         android:layout_marginTop="6dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recycler_view_shopping_cart" />
-
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_shopping_cart"/>
                     <TextView
                         android:id="@+id/text_view_note"
                         style="@style/TextViewLink"
@@ -60,8 +56,7 @@
                         android:text="@string/order_add_note_title"
                         app:drawableStartCompat="@drawable/ic_note_add"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/materialDivider2" />
-
+                        app:layout_constraintTop_toBottomOf="@id/materialDivider2"/>
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider3"
                         android:layout_width="match_parent"
@@ -69,16 +64,14 @@
                         android:layout_marginTop="6dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_view_note" />
-
+                        app:layout_constraintTop_toBottomOf="@id/text_view_note"/>
                     <TextView
                         android:id="@+id/text_view_delivery_address_title"
                         style="@style/TextViewTitle"
                         android:layout_marginTop="6dp"
                         android:text="@string/order_delivery_options_title"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/materialDivider3" />
-
+                        app:layout_constraintTop_toBottomOf="@id/materialDivider3"/>
                     <RadioGroup
                         android:id="@+id/radio_group"
                         android:layout_width="match_parent"
@@ -87,27 +80,24 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/text_view_delivery_address_title">
-
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radio_button_venue"
                             style="@style/RadioButton"
-                            android:text="@string/order_no_delivery" />
-
+                            android:text="@string/order_no_delivery"/>
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radio_button_delivery_address"
                             style="@style/RadioButton"
-                            android:text="@string/order_delivery_to_address" />
-
+                            android:text="@string/order_delivery_to_address"/>
                         <TextView
                             android:id="@+id/text_view_current_address"
                             style="@style/TextViewDescription"
-                            android:text="@{accountViewModel.deliveryAddress.toString()}" />
-
+                            android:text="@{accountViewModel.deliveryAddress.toString()}"/>
                         <TextView
                             android:id="@+id/button_change_address"
                             style="@style/TextViewLink"
+                            android:layout_marginTop="6dp"
                             android:layout_gravity="end"
-                            android:text="@string/order_change_delivery_address" />
+                            android:text="@string/order_change_delivery_address"/>
                     </RadioGroup>
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider5"
@@ -124,7 +114,6 @@
                         android:text="@string/order_delivery_datetime_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/materialDivider5"/>
-
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chip_group_days"
                         android:layout_width="match_parent"
@@ -135,7 +124,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/text_view_delivery_datetime"
-                        app:singleSelection="true" />
+                        app:singleSelection="true"/>
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/materialDivider6"
                         android:layout_width="0dp"
@@ -144,8 +133,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/chip_group_days"
-                        app:layout_constraintWidth_percent="0.85" />
-
+                        app:layout_constraintWidth_percent="0.85"/>
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chip_group_hours"
                         android:layout_width="match_parent"
@@ -156,7 +144,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/materialDivider6"
-                        app:singleSelection="true" />
+                        app:singleSelection="true"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
         </com.google.android.material.card.MaterialCardView>

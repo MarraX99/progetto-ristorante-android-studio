@@ -43,7 +43,7 @@ class FragmentFoodType: Fragment() {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 val foodTypeList = viewModel.getFoodTypes()
                 withContext(Dispatchers.Main) {
-                    if(viewModel.isLoggedIn()) {
+                    if(viewModel.isLoggedIn) {
                         binding.bottomNavbar.visibility = View.VISIBLE
                         binding.bottomNavbar.setOnItemSelectedListener { menuItem ->
                             when(menuItem.itemId) {

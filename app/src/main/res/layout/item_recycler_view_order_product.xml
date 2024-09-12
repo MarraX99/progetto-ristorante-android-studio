@@ -21,7 +21,8 @@
             app:layout_constraintHeight_percent="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_name"
-            app:layout_constraintWidth_percent="0.5"/>
+            app:layout_constraintWidth_percent="0.5"
+            app:shapeAppearanceOverlay="@style/RoundedSquare"/>
         <TextView
             android:id="@+id/text_view_quantity"
             style="@style/TextViewDescription"

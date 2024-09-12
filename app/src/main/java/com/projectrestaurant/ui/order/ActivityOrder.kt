@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.projectrestaurant.databinding.ActivityOrderBinding
+import com.projectrestaurant.viewmodel.AccountViewModel
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
 
 class ActivityOrder: AppCompatActivity() {
@@ -23,11 +24,13 @@ class ActivityOrder: AppCompatActivity() {
     lateinit var binding: ActivityOrderBinding
     private val auth by lazy { FirebaseAuth.getInstance() }
     private lateinit var navController: NavController
-    private lateinit var viewModel: FoodOrderViewModel
+    private lateinit var foodOrderViewModel: FoodOrderViewModel
+    private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = FoodOrderViewModel(application)
+        foodOrderViewModel = FoodOrderViewModel(application)
+        accountViewModel = AccountViewModel(application)
         FirebaseApp.initializeApp(application)
         sharedPrefs = getSharedPreferences(getString(com.projectrestaurant.R.string.preference_file_key), Context.MODE_PRIVATE)
         val themeMode = sharedPrefs.getInt(getString(com.projectrestaurant.R.string.saved_theme_key), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

@@ -10,8 +10,7 @@ class SettingsViewModel(private val application: Application): AndroidViewModel(
     private val sharedPrefs: SharedPreferences = application.getSharedPreferences(application.resources.getString(com.projectrestaurant.R.string.preference_file_key), Context.MODE_PRIVATE)
     private val editor : SharedPreferences.Editor = sharedPrefs.edit()
 
-    fun getThemeFromPreferences(): Int =
-        sharedPrefs.getInt(application.resources.getString(com.projectrestaurant.R.string.saved_theme_key), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    fun getThemeFromPreferences(): Int = sharedPrefs.getInt(application.resources.getString(com.projectrestaurant.R.string.saved_theme_key), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
     fun setThemeInPreferences(mode: Int) {
         editor.putInt(application.resources.getString(com.projectrestaurant.R.string.saved_theme_key), mode)

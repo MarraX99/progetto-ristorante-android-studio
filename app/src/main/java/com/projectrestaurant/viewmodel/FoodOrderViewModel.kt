@@ -46,15 +46,17 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
     private val foodDescriptions: Array<String> by lazy {
         application.resources.getStringArray(com.projectrestaurant.R.array.food_descriptions)
     }
+    val monthNames: Array<String> by lazy {
+        application.resources.getStringArray(com.projectrestaurant.R.array.month_names)
+    }
     private val _foodQuantity = MutableLiveData(1)
-    val foodQuantity: LiveData<Int>
-        get() = _foodQuantity
+    val foodQuantity: LiveData<Int> get() = _foodQuantity
     private val _totalPrice = MutableLiveData(0.0)
-    val totalPrice: LiveData<Double>
-        get() = _totalPrice
+    val totalPrice: LiveData<Double> get() = _totalPrice
     private val _totalPriceString = MutableLiveData("0.00")
-    val totalPriceString: LiveData<String>
-        get() = _totalPriceString
+    val totalPriceString: LiveData<String> get() = _totalPriceString
+    val userId by lazy { auth.currentUser!!.uid }
+    val isLoggedIn: Boolean get() = auth.currentUser != null
 
     init {
         val foodTypeRef = firestoreDB.collection("food_types")
@@ -71,7 +73,6 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         }
     }
 
-
     fun isOnline(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
@@ -85,10 +86,6 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         }
         return false
     }
-
-    fun isLoggedIn(): Boolean { return auth.currentUser != null }
-
-    fun getUserId(): String = auth.currentUser!!.uid
 
     suspend fun getFoodTypes(): List<FoodType> {
         if(!(restaurantDB.foodTypeDao().exists())) getFoodTypesFromRemoteDatabase()
@@ -190,7 +187,7 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         return list
     }
 
-    suspend fun createOrder(cartProducts: Set<CartProduct>, deliveryDate: Calendar): Boolean {
+    suspend fun createOrder(cartProducts: Set<CartProduct>, deliveryDate: Calendar, useDeliveryAddress: Boolean): Boolean {
         val order: DocumentReference = firestoreDB.collection("orders").document()
         val user = firestoreDB.document("users/${auth.currentUser!!.uid}").get().await()
         var totalPrice = 0.0
@@ -199,7 +196,7 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
                 "note" to getOrderNote(),
                 "user" to user.reference,
                 "order_date_time" to FieldValue.serverTimestamp(), "delivery_date_time" to Timestamp(deliveryDate.time),
-                "delivery_address" to (user.data!!["default_delivery_address"] as DocumentReference))).await()
+                "delivery_address" to (if(useDeliveryAddress) user.data!!["default_delivery_address"] as DocumentReference else null))).await()
             setOrderNote("")
             val products = order.collection("products")
             for(product in cartProducts) {
@@ -260,6 +257,8 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
             false
         }
     }
+
+    suspend fun getFoodImage(foodId: Int): String? = restaurantDB.foodDao().getFoodById(foodId)?.imageUri
 
     suspend fun isShoppingCartEmpty(): Boolean {
         return firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart").limit(1).get().await().isEmpty
@@ -324,55 +323,33 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         if(day[Calendar.DAY_OF_MONTH] == currentDay[Calendar.DAY_OF_MONTH]) {
             startHour.time = currentDay.time
             when(currentDay[Calendar.HOUR_OF_DAY]) {
-
-                in 0..17 -> {
-                    with(startHour) {
-                        set(Calendar.HOUR_OF_DAY, 18); set(Calendar.MINUTE, 30)
-                        set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                    }
-                    hours.add(startHour.timeInMillis)
-                    while(startHour.get(Calendar.HOUR_OF_DAY) <= 22) { // from 18:45 until 23:00
-                        startHour.timeInMillis += 900000  // 15 minutes = 900000 milliseconds
-                        hours.add(startHour.timeInMillis)
-                    }
-                    startHour.timeInMillis += 900000  // 15 minutes = 900000 milliseconds
-                    hours.add(startHour.timeInMillis)   // adding 23:15
+                in 0..17 -> with(startHour) {
+                    set(Calendar.HOUR_OF_DAY, 18); set(Calendar.MINUTE, 30)
+                    set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                 }
-
                 in 18..22 -> {
                     when(currentDay[Calendar.MINUTE]) {
-                        in 0..15 ->  {
-                            with(startHour) {
-                                set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
-                                set(Calendar.MINUTE, 30); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                            }
+                        in 0..15 -> with(startHour) {
+                            set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
+                            set(Calendar.MINUTE, 30); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                         }
-                        in 16..30 -> {
-                            with(startHour) {
-                                set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
-                                set(Calendar.MINUTE, 45); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                            }
+                        in 16..30 -> with(startHour) {
+                            set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
+                            set(Calendar.MINUTE, 45); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                         }
-                        in 31..45 -> {
-                            with(startHour) {
-                                set(Calendar.HOUR_OF_DAY, ++(currentDay[Calendar.HOUR_OF_DAY]))
-                                set(Calendar.MINUTE, 0); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                            }
+                        in 31..45 -> with(startHour) {
+                            set(Calendar.HOUR_OF_DAY, ++(currentDay[Calendar.HOUR_OF_DAY]))
+                            set(Calendar.MINUTE, 0); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                         }
-                        else -> { // else branch => between xx:46 and (++xx):00 where xx is the current hour
-                            with(startHour) {
-                                set(Calendar.HOUR_OF_DAY, ++(currentDay[Calendar.HOUR_OF_DAY]))
-                                set(Calendar.MINUTE, 15); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                            }
+                        else -> with(startHour) { // else branch => between xx:46 and (++xx):00 where xx is the current hour
+                            set(Calendar.HOUR_OF_DAY, ++(currentDay[Calendar.HOUR_OF_DAY]))
+                            set(Calendar.MINUTE, 15); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                         }
                     }
                 }
-
-                23 -> {
-                    with(startHour) {
-                        set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
-                        set(Calendar.MINUTE, 30); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
-                    }
+                23 -> with(startHour) {
+                    set(Calendar.HOUR_OF_DAY, currentDay[Calendar.HOUR_OF_DAY])
+                    set(Calendar.MINUTE, 30); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0)
                 }
             }
             hours.add(startHour.timeInMillis)
@@ -382,7 +359,6 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
             }
             startHour.timeInMillis += 900000  // 15 minutes = 900000 milliseconds
             hours.add(startHour.timeInMillis)   // adding 23:15
-
         } else {
             with(startHour) {
                 time = day.time

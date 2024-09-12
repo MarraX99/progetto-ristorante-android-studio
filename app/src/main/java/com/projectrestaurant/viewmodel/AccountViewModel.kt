@@ -19,20 +19,16 @@ import kotlinx.coroutines.tasks.await
 class AccountViewModel(application: Application): AndroidViewModel(application) {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val firestoreDB by lazy { FirebaseFirestore.getInstance() }
-    private var firestoreUser = firestoreDB.document("users/${auth.currentUser!!.uid}")
+    private val firestoreUser by lazy { firestoreDB.document("users/${auth.currentUser!!.uid}") }
     private val restaurantDB = RestaurantDB.getInstance(application)
     private val _name = MutableLiveData("")
-    val name : LiveData<String>
-        get() = _name
+    val name : LiveData<String> get() = _name
     private val _surname = MutableLiveData("")
-    val surname : LiveData<String>
-        get() = _surname
+    val surname : LiveData<String> get() = _surname
     private val _email = MutableLiveData("")
-    val email : LiveData<String>
-        get() = _email
-    private val _deliveryAddress = MutableLiveData("")
-    val deliveryAddress : LiveData<String>
-        get() = _deliveryAddress
+    val email : LiveData<String> get() = _email
+    private val _deliveryAddress = MutableLiveData<String?>(null)
+    val deliveryAddress : LiveData<String?> get() = _deliveryAddress
 
     fun validateEmail(email: String): HashMap<String,Boolean> {
         val checks = HashMap<String,Boolean>(2)
@@ -108,7 +104,7 @@ class AccountViewModel(application: Application): AndroidViewModel(application) 
 
     suspend fun getDefaultDeliveryAddress(userId: String) {
         val address = restaurantDB.addressDao().getDefaultDeliveryAddress(userId)
-        _deliveryAddress.postValue("${address?.address} - ${address?.cap} - ${address?.city} - ${address?.province}")
+        _deliveryAddress.postValue(if(address != null) "${address.address} - ${address.cap} - ${address.city} - ${address.province}" else null)
     }
 
     suspend fun addDeliveryAddress(address: String, cap: String, city: String, province: String, isDefault: Boolean): Address? {

@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.projectrestaurant.CartProduct
 import com.projectrestaurant.databinding.ItemRecyclerViewCartProductBinding
 import com.projectrestaurant.ui.order.FragmentShoppingCartDirections
@@ -26,15 +27,18 @@ class CartProductAdapter(private val navController: NavController, private val c
     private var stringBuilder: StringBuilder = StringBuilder()
     lateinit var productsList: MutableSet<CartProduct>
         private set
+    private lateinit var foodImages: HashMap<Int,String?>
 
-    fun setData(data: MutableSet<CartProduct>) {
+    fun setData(data: MutableSet<CartProduct>, images: HashMap<Int,String?>) {
         productsList = data
+        foodImages = images
         submitList(productsList.toList())
     }
 
     //Single element of the list
-    class CartProductViewHolder(val binding: ItemRecyclerViewCartProductBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    class CartProductViewHolder(val binding: ItemRecyclerViewCartProductBinding) : RecyclerView.ViewHolder(binding.root) {
+        lateinit var cartProductId: String
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartProductViewHolder {
         val binding = ItemRecyclerViewCartProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -45,10 +49,13 @@ class CartProductAdapter(private val navController: NavController, private val c
 
     override fun onBindViewHolder(holder: CartProductViewHolder, position: Int) {
         val cartElement = productsList.elementAt(position)
+        holder.cartProductId = cartElement.cartProductId
         with(holder.binding) {
             textViewName.text = cartElement.food.name
             textViewPrice.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_price, String.format("%.2f", cartElement.price))
             textViewQuantity.text = context.getString(com.projectrestaurant.R.string.shopping_cart_product_quantity, cartElement.quantity.toString())
+            Glide.with(context).load(foodImages[cartElement.food.foodId])
+                .placeholder(com.projectrestaurant.R.drawable.placeholder).error(com.projectrestaurant.R.drawable.placeholder).into(imageViewFood)
             if(cartElement.extraIngredients.isEmpty()) textViewExtraIngredients.isVisible = false
             else {
                 textViewExtraIngredients.isVisible = true

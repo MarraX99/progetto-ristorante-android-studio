@@ -38,8 +38,6 @@ class OrdersViewModel(private val application: Application): AndroidViewModel(ap
     }
 
     init {
-        val NUMBER_OF_MONTHS: Byte = 1
-        val MILLISECONDS_PER_MONTH = 2592000000  //Milliseconds in 30 days
         val currentTimestamp = Timestamp.now().toDate().time
         val greaterDate = Date(currentTimestamp - NUMBER_OF_MONTHS * MILLISECONDS_PER_MONTH)
         val userRef = firestoreDB.document("users/${auth.currentUser!!.uid}")

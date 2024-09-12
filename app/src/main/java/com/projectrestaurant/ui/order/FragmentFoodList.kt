@@ -56,7 +56,7 @@ class FragmentFoodList: Fragment(), MenuProvider {
                     progressBar.visibility = View.GONE
                     progressBar.isIndeterminate = false
                     constraintLayout.overlay.remove(progressBar)
-                    if(viewModel.isLoggedIn() && !(viewModel.isShoppingCartEmpty())) buttonShoppingCart.visibility = View.VISIBLE
+                    if(viewModel.isLoggedIn && !(viewModel.isShoppingCartEmpty())) buttonShoppingCart.visibility = View.VISIBLE
                     adapter.setFoodData(foodList)
                     recyclerViewFoodList.adapter = adapter
                     editTextSearch.addTextChangedListener { adapter.filter.filter(it) }

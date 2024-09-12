@@ -71,7 +71,7 @@ class FragmentFoodIngredients: Fragment() {
                 binding.progressBar.isIndeterminate = true
                 binding.constraintLayout.overlay.add(binding.progressBar)
                 binding.progressBar.visibility = View.VISIBLE
-                if(viewModel.isLoggedIn()) {
+                if(viewModel.isLoggedIn) {
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                         val result = withContext(Dispatchers.IO) {viewModel.addProductToShoppingCart(args.food,
                             (binding.recyclerViewFoodIngredients.adapter as IngredientAdapter).getExtraIngredients(),
