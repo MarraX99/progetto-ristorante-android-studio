@@ -108,7 +108,7 @@
     <string name="shopping_cart_title">Your shopping cart</string>
     <string name="shopping_cart_product_quantity">Quantity: %1$s</string>
     <string name="shopping_cart_product_price" translatable="false">€ %1$s</string>
-    <string name="shopping_cart_product_price_plus" translatable="false">+ € %1$s</string>
+    <string name="shopping_cart_product_price_plus">+ € %1$s per piece</string>
     <string name="shopping_cart_order_title">Order now</string>
     <string name="shopping_cart_edit_product_title">Update cart</string>
     <string name="shopping_cart_go_to">Go to cart</string>

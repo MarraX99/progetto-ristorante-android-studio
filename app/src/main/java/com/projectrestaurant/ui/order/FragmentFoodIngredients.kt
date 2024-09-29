@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.projectrestaurant.IngredientQuantity
 import com.projectrestaurant.adapter.IngredientAdapter
 import com.projectrestaurant.databinding.FragmentFoodIngredientsBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
@@ -26,6 +27,7 @@ class FragmentFoodIngredients: Fragment() {
     private lateinit var navController: NavController
     private val viewModel: FoodOrderViewModel by activityViewModels()
     private val args: FragmentFoodIngredientsArgs by navArgs<FragmentFoodIngredientsArgs>()
+    private lateinit var adapter: IngredientAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -42,12 +44,20 @@ class FragmentFoodIngredients: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonIncrement.setOnClickListener {
             viewModel.incrementFoodQuantity()
-            viewModel.addToPrice(args.food.unitPrice)
+            var toAdd: Double = args.food.unitPrice
+            for(element in viewModel.getQuantities())
+                if(element.value == IngredientQuantity.INGREDIENT_EXTRA)
+                    toAdd += adapter.data.find { it.ingredientId == element.key }!!.unitPrice
+            viewModel.addToPrice(toAdd)
         }
         binding.buttonDecrement.setOnClickListener {
             if(viewModel.foodQuantity.value!! > 1) {
                 viewModel.decrementFoodQuantity()
-                viewModel.removeToPrice(args.food.unitPrice)
+                var toRemove: Double = args.food.unitPrice
+                for(element in viewModel.getQuantities())
+                    if(element.value == IngredientQuantity.INGREDIENT_EXTRA)
+                        toRemove += adapter.data.find { it.ingredientId == element.key }!!.unitPrice
+                viewModel.removeToPrice(toRemove)
             }
         }
         viewModel.addToPrice(args.food.unitPrice)
@@ -63,8 +73,10 @@ class FragmentFoodIngredients: Fragment() {
             if(ingredientList.isNotEmpty()) {
                 binding.textView3.visibility = View.VISIBLE
                 binding.materialDivider2.visibility = View.VISIBLE
+                for(i in ingredientList) viewModel.setIngredientQuantity(i.ingredientId, IngredientQuantity.INGREDIENT_NORMAL)
             }
-            binding.recyclerViewFoodIngredients.adapter = IngredientAdapter(ingredientList, requireActivity().application, viewModel)
+            adapter = IngredientAdapter(ingredientList, requireActivity().application, viewModel)
+            binding.recyclerViewFoodIngredients.adapter = adapter
             binding.textViewShoppingCartTitle.text = resources.getString(com.projectrestaurant.R.string.shopping_cart_add_title, viewModel.foodQuantity.value.toString())
             binding.cardViewShoppingCart.setOnClickListener {
                 it.isClickable = false
@@ -73,9 +85,8 @@ class FragmentFoodIngredients: Fragment() {
                 binding.progressBar.visibility = View.VISIBLE
                 if(viewModel.isLoggedIn) {
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                        val result = withContext(Dispatchers.IO) {viewModel.addProductToShoppingCart(args.food,
-                            (binding.recyclerViewFoodIngredients.adapter as IngredientAdapter).getExtraIngredients(),
-                            (binding.recyclerViewFoodIngredients.adapter as IngredientAdapter).getRemovedIngredients())
+                        val result = withContext(Dispatchers.IO) {
+                            viewModel.addProductToShoppingCart(args.food, adapter.getExtraIngredients(), adapter.getRemovedIngredients())
                         }
                         if(result) navController.navigateUp()
                         else {

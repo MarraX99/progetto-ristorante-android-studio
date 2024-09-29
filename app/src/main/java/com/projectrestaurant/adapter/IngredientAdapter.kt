@@ -12,7 +12,7 @@ import com.projectrestaurant.database.Ingredient
 import com.projectrestaurant.databinding.ItemRecyclerViewIngredientListBinding
 import com.projectrestaurant.viewmodel.FoodOrderViewModel
 
-class IngredientAdapter(private val data: List<Ingredient>, private val application: Application, private val viewModel: FoodOrderViewModel)
+class IngredientAdapter(val data: List<Ingredient>, private val application: Application, private val viewModel: FoodOrderViewModel)
     : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
     private val extraIngredients = arrayListOf<Ingredient>()
@@ -20,9 +20,7 @@ class IngredientAdapter(private val data: List<Ingredient>, private val applicat
 
     //Single element of the list
     inner class IngredientViewHolder(val binding: ItemRecyclerViewIngredientListBinding)
-        : RecyclerView.ViewHolder(binding.root) {
-        var quantity: IngredientQuantity = IngredientQuantity.INGREDIENT_NORMAL
-    }
+        : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemRecyclerViewIngredientListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -42,40 +40,40 @@ class IngredientAdapter(private val data: List<Ingredient>, private val applicat
             }
             if(extraIngredients.contains(data[position])) {
                 binding.textViewIngredientPrice.isVisible = true
-                quantity = IngredientQuantity.INGREDIENT_EXTRA
+                viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_EXTRA)
             }
             if(removedIngredients.contains(data[position])) {
                 binding.textViewIngredientName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                quantity = IngredientQuantity.INGREDIENT_REMOVED
+                viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_REMOVED)
             }
             binding.buttonDecrement.setOnClickListener {
-                when(quantity) {
+                when(viewModel.getIngredientQuantity(data[position].ingredientId)) {
                     IngredientQuantity.INGREDIENT_REMOVED -> return@setOnClickListener
                     IngredientQuantity.INGREDIENT_NORMAL -> {
                         binding.textViewIngredientName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                        quantity = IngredientQuantity.INGREDIENT_REMOVED
+                        viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_REMOVED)
                         removedIngredients.add(data[position])
                     }
                     IngredientQuantity.INGREDIENT_EXTRA -> {
                         binding.textViewIngredientPrice.isVisible = false
-                        quantity = IngredientQuantity.INGREDIENT_NORMAL
-                        viewModel.removeToPrice(data[position].unitPrice)
+                        viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_NORMAL)
+                        viewModel.removeToPrice(data[position].unitPrice * viewModel.foodQuantity.value!!)
                         extraIngredients.remove(data[position])
                     }
                 }
             }
             binding.buttonIncrement.setOnClickListener {
-                when(quantity) {
+                when(viewModel.getIngredientQuantity(data[position].ingredientId)) {
                     IngredientQuantity.INGREDIENT_EXTRA -> return@setOnClickListener
                     IngredientQuantity.INGREDIENT_NORMAL -> {
                         binding.textViewIngredientPrice.isVisible = true
-                        quantity = IngredientQuantity.INGREDIENT_EXTRA
-                        viewModel.addToPrice(data[position].unitPrice)
+                        viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_EXTRA)
+                        viewModel.addToPrice(data[position].unitPrice * viewModel.foodQuantity.value!!)
                         extraIngredients.add(data[position])
                     }
                     IngredientQuantity.INGREDIENT_REMOVED -> {
                         binding.textViewIngredientName.paintFlags = Paint.ANTI_ALIAS_FLAG
-                        quantity = IngredientQuantity.INGREDIENT_NORMAL
+                        viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_NORMAL)
                         removedIngredients.remove(data[position])
                     }
                 }

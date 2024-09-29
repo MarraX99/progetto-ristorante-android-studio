@@ -102,6 +102,7 @@
     <string name="shopping_cart_edit_product_error_message">Si è verificato un errore nell\'aggiornare il prodotto nel carrello, per favore riprova</string>
     <string name="shopping_cart_title">Il tuo carrello</string>
     <string name="shopping_cart_product_quantity">Quantità: %1$s</string>
+    <string name="shopping_cart_product_price_plus">+ € %1$s a pezzo</string>
     <string name="shopping_cart_order_title">Ordina ora</string>
     <string name="shopping_cart_edit_product_title">Aggiorna carrello</string>
     <string name="shopping_cart_go_to">Vai al carrello</string>

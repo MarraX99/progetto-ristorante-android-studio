@@ -18,6 +18,7 @@ import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.projectrestaurant.CartProduct
+import com.projectrestaurant.IngredientQuantity
 import com.projectrestaurant.database.Food
 import com.projectrestaurant.database.FoodIngredient
 import com.projectrestaurant.database.FoodType
@@ -28,6 +29,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Date
+import kotlin.collections.HashMap
 
 @Suppress("UNCHECKED_CAST")
 class FoodOrderViewModel(private val application: Application): AndroidViewModel(application) {
@@ -49,6 +51,7 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
     val monthNames: Array<String> by lazy {
         application.resources.getStringArray(com.projectrestaurant.R.array.month_names)
     }
+    private val ingredientQuantities: MutableMap<Int,IngredientQuantity> = mutableMapOf()
     private val _foodQuantity = MutableLiveData(1)
     val foodQuantity: LiveData<Int> get() = _foodQuantity
     private val _totalPrice = MutableLiveData(0.0)
@@ -375,6 +378,14 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         }
         return hours
     }
+
+    fun setIngredientQuantity(ingredientId: Int, quantity: IngredientQuantity) {
+        ingredientQuantities[ingredientId] = quantity
+    }
+
+    fun getIngredientQuantity(ingredientId: Int): IngredientQuantity = ingredientQuantities[ingredientId]!!
+
+    fun getQuantities(): Map<Int,IngredientQuantity> = ingredientQuantities
 
     /* PRIVATE FUNCTIONS HERE */
 
