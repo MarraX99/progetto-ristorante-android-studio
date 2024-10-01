@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.projectrestaurant.CartProduct
@@ -29,7 +28,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.Date
-import kotlin.collections.HashMap
 
 @Suppress("UNCHECKED_CAST")
 class FoodOrderViewModel(private val application: Application): AndroidViewModel(application) {
@@ -145,11 +143,6 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         _totalPriceString.value = String.format("%.2f", _totalPrice.value!!)
     }
 
-    fun removeToPrice(value: Double) {
-        _totalPrice.value = _totalPrice.value!! - value
-        _totalPriceString.value = String.format("%.2f", _totalPrice.value!!)
-    }
-
     fun resetPrice() {
         _totalPrice.value = 0.0
         _totalPriceString.value = String.format("%.2f", _totalPrice.value!!)
@@ -236,22 +229,23 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
             for (ingredient in removedIngredients) {
                 removed.add(firestoreDB.document("ingredients/${ingredient.ingredientId}"))
             }
-            val tmp = firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart")
-                .where(Filter.and(
-                    Filter.equalTo("price", _totalPrice.value!!),
-                    Filter.equalTo("food", foodRef),
-                    Filter.equalTo("extra_ingredients", extra),
-                    Filter.equalTo("removed_ingredients", removed))).limit(1).get().await()
-            if (tmp.isEmpty) {
+            var tmp = firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart")
+                .whereEqualTo("food", foodRef)
+            if(extra.isNotEmpty()) tmp = tmp.whereArrayContainsAny("extra_ingredients", extra)
+            if(removed.isNotEmpty()) tmp = tmp.whereArrayContainsAny("removed_ingredients", removed).limit(1)
+            val similar = tmp.get().await()
+            if (similar.isEmpty) {
                 val new = firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart").document()
                 new.set(hashMapOf(
                         "food" to foodRef, "extra_ingredients" to extra, "removed_ingredients" to removed,
                         "quantity" to _foodQuantity.value!!, "price" to _totalPrice.value!!), SetOptions.merge()).await()
                 Log.i("FirebaseFirestore", "Cart product successfully added to shopping cart with ID: ${new.id}")
             } else {
-                Log.i("FirebaseFirestore", "Cart product already exists with ID: ${tmp.documents[0].id}")
-                firestoreDB.document("users/${auth.currentUser!!.uid}/shopping_cart/${tmp.documents[0].id}")
-                    .set(hashMapOf("quantity" to tmp.documents[0].data!!["quantity"].toString().toInt() + _foodQuantity.value!!), SetOptions.merge())
+                Log.i("FirebaseFirestore", "Cart product already exists with ID: ${similar.documents[0].id}")
+                similar.documents[0].reference.set(hashMapOf(
+                    "quantity" to similar.documents[0].data!!["quantity"].toString().toInt() + _foodQuantity.value!!,
+                    "price" to (similar.documents[0].data!!["price"]).toString().toDouble() + _totalPrice.value!!
+                ), SetOptions.merge())
                 Log.i("FirebaseFirestore", "Increased cart product's quantity")
             }
             true
@@ -263,9 +257,8 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
 
     suspend fun getFoodImage(foodId: Int): String? = restaurantDB.foodDao().getFoodById(foodId)?.imageUri
 
-    suspend fun isShoppingCartEmpty(): Boolean {
-        return firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart").limit(1).get().await().isEmpty
-    }
+    suspend fun isShoppingCartEmpty(): Boolean =
+        firestoreDB.collection("users/${auth.currentUser!!.uid}/shopping_cart").limit(1).get().await().isEmpty
 
     suspend fun deleteProductFromCart(productId: String) {
         firestoreDB.document("users/${auth.currentUser!!.uid}/shopping_cart/$productId").delete().await()
@@ -283,9 +276,8 @@ class FoodOrderViewModel(private val application: Application): AndroidViewModel
         }
     }
 
-    suspend fun getOrderNote(): String {
-        return firestoreDB.document("users/${auth.currentUser!!.uid}").get().await().data?.get("order_note").toString()
-    }
+    suspend fun getOrderNote(): String =
+        firestoreDB.document("users/${auth.currentUser!!.uid}").get().await().data?.get("order_note").toString()
 
     suspend fun updateCartProduct(cartProduct: CartProduct): Boolean {
         return try{

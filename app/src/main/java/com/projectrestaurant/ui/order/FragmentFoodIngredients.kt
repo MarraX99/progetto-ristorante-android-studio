@@ -57,7 +57,7 @@ class FragmentFoodIngredients: Fragment() {
                 for(element in viewModel.getQuantities())
                     if(element.value == IngredientQuantity.INGREDIENT_EXTRA)
                         toRemove += adapter.data.find { it.ingredientId == element.key }!!.unitPrice
-                viewModel.removeToPrice(toRemove)
+                viewModel.addToPrice(-toRemove)
             }
         }
         viewModel.addToPrice(args.food.unitPrice)

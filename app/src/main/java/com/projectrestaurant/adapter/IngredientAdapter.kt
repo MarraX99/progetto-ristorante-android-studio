@@ -57,7 +57,7 @@ class IngredientAdapter(val data: List<Ingredient>, private val application: App
                     IngredientQuantity.INGREDIENT_EXTRA -> {
                         binding.textViewIngredientPrice.isVisible = false
                         viewModel.setIngredientQuantity(data[position].ingredientId, IngredientQuantity.INGREDIENT_NORMAL)
-                        viewModel.removeToPrice(data[position].unitPrice * viewModel.foodQuantity.value!!)
+                        viewModel.addToPrice(-data[position].unitPrice * viewModel.foodQuantity.value!!)
                         extraIngredients.remove(data[position])
                     }
                 }

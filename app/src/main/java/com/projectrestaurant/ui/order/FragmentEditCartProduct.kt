@@ -74,7 +74,7 @@ class FragmentEditCartProduct: Fragment() {
         binding.buttonDecrement.setOnClickListener {
             if(viewModel.foodQuantity.value!! > 1) {
                 viewModel.decrementFoodQuantity()
-                viewModel.removeToPrice(food!!.unitPrice)
+                viewModel.addToPrice(-food!!.unitPrice)
             }
         }
         binding.cardViewShoppingCart.setOnClickListener{
